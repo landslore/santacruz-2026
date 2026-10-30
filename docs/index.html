@@ -948,54 +948,91 @@
       padding: 0 4px;
     }
 
-    .st-podium-row {
+    /* Hero Card H2H (Opción 2) */
+    .hero-h2h {
       display: grid;
-      grid-template-columns: 1fr 140px 1fr;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      gap: 10px;
-      padding: 10px 0;
-      margin-bottom: 6px;
-      border-bottom: 1px dashed #e2e8f0;
+      gap: 14px;
+      background: linear-gradient(135deg, #0b2545 0%, #1e3a5f 100%);
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(11, 37, 69, 0.2);
     }
 
-    .st-podium-box {
+    .hero-team {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .hero-team.team-a { align-items: flex-end; text-align: right; }
+    .hero-team.team-b { align-items: flex-start; text-align: left; }
+
+    .hero-crest {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 2px;
+      border: 2px solid rgba(255,255,255,0.4);
+      object-fit: contain;
+    }
+
+    .hero-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .hero-name:hover {
+      text-decoration: underline;
+    }
+
+    .hero-badges {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 2px;
+      flex-wrap: wrap;
     }
 
-    .st-podium-box.box-a { justify-content: flex-end; }
-    .st-podium-box.box-b { justify-content: flex-start; }
+    .hero-team.team-a .hero-badges { justify-content: flex-end; }
+    .hero-team.team-b .hero-badges { justify-content: flex-start; }
 
-    .st-rank-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    .hero-tag {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hero-tag.tag-gold {
+      background: #fbbf24;
+      color: #78350f;
+      border-color: #f59e0b;
+    }
+
+    .hero-forma {
+      display: flex;
+      gap: 3px;
+      margin-top: 2px;
+    }
+
+    .vs-pill {
+      font-weight: 900;
+      color: #ffffff;
+      background: var(--score-red);
       padding: 4px 10px;
       border-radius: 20px;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .st-rank-pill.leader {
-      background: #fef3c7;
-      color: #92400e;
-      border: 1.5px solid #f59e0b;
-      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
-    }
-
-    .st-rank-pill.runner-up {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1.5px solid #cbd5e1;
-    }
-
-    .st-rank-subtext {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
     }
 
     /* Indicador de carga */
@@ -1109,11 +1146,10 @@
         font-size: 12px;
       }
       .st-cmp-row .lbl-center { font-size: 10.5px; }
-      .st-podium-row {
-        grid-template-columns: 1fr 105px 1fr;
-        gap: 6px;
-      }
-      .st-rank-pill { font-size: 11.5px; padding: 3px 6px; }
+      .hero-h2h { padding: 12px 8px; gap: 8px; }
+      .hero-crest { width: 38px; height: 38px; }
+      .hero-name { font-size: 12.5px; }
+      .hero-tag { font-size: 10px; padding: 1px 5px; }
     }
   </style>
 </head>
@@ -1804,42 +1840,45 @@
         '</div>';
       }
 
-      let html = '<div class="st-cmp-table">';
+      let html = '';
 
-      // 1. Podio de Posición (Sin barra engañosa, estilo Opción A recomendada)
+      // 1. HERO CARD ESTILO SOFASCORE (Opción B)
       const leaderA = A.posicion < B.posicion;
       const leaderB = B.posicion < A.posicion;
-      const pillClassA = leaderA ? 'st-rank-pill leader' : 'st-rank-pill runner-up';
-      const pillClassB = leaderB ? 'st-rank-pill leader' : 'st-rank-pill runner-up';
-
-      html += '<div class="st-podium-row">' +
-        '<div class="st-podium-box box-a">' +
-          '<div class="' + pillClassA + '">' + (leaderA ? '👑 ' : '') + A.posicion + 'º' + '</div>' +
+      html += '<div class="hero-h2h">' +
+        '<div class="hero-team team-a" onclick="goToTeamById(' + A.id + ')">' +
+          '<img src="' + escapeAttr(A.escudo) + '" class="hero-crest" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+          '<div class="hero-name">' + escapeHtml(A.nombre) + (A.esSantaCruz ? ' ⭐' : '') + '</div>' +
+          '<div class="hero-badges">' +
+            '<span class="hero-tag ' + (leaderA ? 'tag-gold' : '') + '">' + (leaderA ? '👑 ' : '') + A.posicion + 'º Clasificado</span>' +
+            '<span class="hero-tag">' + A.pts + ' pts</span>' +
+          '</div>' +
+          '<div class="hero-forma">' + formaHtml(A.forma) + '</div>' +
         '</div>' +
-        '<div class="lbl-center"><span class="st-rank-subtext">Posición</span></div>' +
-        '<div class="st-podium-box box-b">' +
-          '<div class="' + pillClassB + '">' + (leaderB ? '👑 ' : '') + B.posicion + 'º' + '</div>' +
+        '<div class="vs-pill">VS</div>' +
+        '<div class="hero-team team-b" onclick="goToTeamById(' + B.id + ')">' +
+          '<img src="' + escapeAttr(B.escudo) + '" class="hero-crest" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+          '<div class="hero-name">' + escapeHtml(B.nombre) + (B.esSantaCruz ? ' ⭐' : '') + '</div>' +
+          '<div class="hero-badges">' +
+            '<span class="hero-tag ' + (leaderB ? 'tag-gold' : '') + '">' + (leaderB ? '👑 ' : '') + B.posicion + 'º Clasificado</span>' +
+            '<span class="hero-tag">' + B.pts + ' pts</span>' +
+          '</div>' +
+          '<div class="hero-forma">' + formaHtml(B.forma) + '</div>' +
         '</div>' +
       '</div>';
 
-      // 2. Métricas en 5 columnas fijas
-      // Puntos
-      const maxPts = Math.max(A.pts, B.pts, 1);
-      html += row5Col(A.pts, Math.round(A.pts*100/maxPts), 'Puntos', Math.round(B.pts*100/maxPts), B.pts, A.pts > B.pts, B.pts > A.pts);
-
-      // Partidos Jugados
-      const maxPj = Math.max(A.pj, B.pj, 1);
-      html += row5Col(A.pj, Math.round(A.pj*100/maxPj), 'Partidos Jugados', Math.round(B.pj*100/maxPj), B.pj, false, false);
+      // 2. SOLO MÉTRICAS DE JUEGO (Con 5 columnas fijas perfectas)
+      html += '<div class="st-cmp-table">';
 
       // Goles a Favor
       const maxGf = Math.max(A.gf, B.gf, 1);
       html += row5Col(A.gf, Math.round(A.gf*100/maxGf), 'Goles a Favor', Math.round(B.gf*100/maxGf), B.gf, A.gf > B.gf, B.gf > A.gf);
 
-      // Goles en Contra -> Solidez Defensiva (menos goles = más barra)
+      // Goles Encajados -> Solidez Defensiva (menos goles = más barra)
       const minGc = Math.min(A.gc, B.gc);
       const pctGcA = A.gc === 0 ? 100 : Math.round((minGc / A.gc) * 100);
       const pctGcB = B.gc === 0 ? 100 : Math.round((minGc / B.gc) * 100);
-      html += row5Col(A.gc, pctGcA, 'Solidez Defensiva', pctGcB, B.gc, A.gc < B.gc, B.gc < A.gc);
+      html += row5Col(A.gc, pctGcA, 'Goles Encajados', pctGcB, B.gc, A.gc < B.gc, B.gc < A.gc);
 
       // Diferencia
       const maxDiff = Math.max(Math.abs(A.diff), Math.abs(B.diff), 1);
@@ -1847,7 +1886,7 @@
       const diffStrB = B.diff > 0 ? '+' + B.diff : '' + B.diff;
       const pctDiffA = Math.max(0, Math.round((A.diff / maxDiff) * 100));
       const pctDiffB = Math.max(0, Math.round((B.diff / maxDiff) * 100));
-      html += row5Col(diffStrA, pctDiffA, 'Diferencia', pctDiffB, diffStrB, A.diff > B.diff, B.diff > A.diff);
+      html += row5Col(diffStrA, pctDiffA, 'Diferencia Goles', pctDiffB, diffStrB, A.diff > B.diff, B.diff > A.diff);
 
       // Puntos Casa
       const maxHome = Math.max(A.homePts, B.homePts, 1);
