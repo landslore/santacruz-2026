@@ -2507,36 +2507,13 @@
       });
       html += '</div><p class="st-nota">Forma: últimos 5 partidos, del más antiguo al más reciente.</p>';
 
-      // Comparador Cara a Cara (H2H)
-      html += '<h2 class="st-zona">Cara a cara</h2><p class="st-nota">Elige dos equipos para compararlos y ver sus enfrentamientos de esta temporada.</p>';
-      html += '<div class="st-card">';
-
-      const optsA = S.teamList.map(t => '<option value="' + t.id + '"' + (t.id === STATE.h2hA ? ' selected' : '') + '>' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</option>').join('');
-      
-      // Preseleccionar en B el próximo rival de Santa Cruz si no está definido
-      if (!STATE.h2hB) {
-        const nextJ = (STATE.data.jornadas || []).find(j => j.numero === STATE.data.jornadaActual);
-        if (nextJ) {
-          const scMatch = (nextJ.partidos || []).find(m => m.esLocalSantaCruz || m.esVisitanteSantaCruz);
-          if (scMatch) {
-            STATE.h2hB = scMatch.esLocalSantaCruz ? scMatch.equipoVisitanteId : scMatch.equipoLocalId;
-          }
-        }
-        if (!STATE.h2hB && S.teamList.length > 1) {
-          STATE.h2hB = S.teamList.find(t => t.id !== STATE.h2hA)?.id || S.teamList[0].id;
-        }
-      }
-
-      const optsB = S.teamList.map(t => '<option value="' + t.id + '"' + (t.id === STATE.h2hB ? ' selected' : '') + '>' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</option>').join('');
-
-      html += '<div class="st-h2h-sel">' +
-        '<select onchange="STATE.h2hA=Number(this.value);renderEstadisticas()">' + optsA + '</select>' +
-        '<b>VS</b>' +
-        '<select onchange="STATE.h2hB=Number(this.value);renderEstadisticas()">' + optsB + '</select>' +
+      // CTA a la sección Comparativa completa
+      html += '<div class="st-card" style="text-align:center; padding:18px; margin-top:20px; background:#f8fafc; border:1px dashed var(--border-color);">' +
+        '<div style="font-size:22px; margin-bottom:6px;">🔬</div>' +
+        '<div style="font-weight:800; color:var(--sc-blue); font-size:14px; margin-bottom:4px;">Comparador Cara a Cara y Análisis de Duelo</div>' +
+        '<div style="font-size:12.5px; color:var(--text-muted); margin-bottom:12px;">Compara métricas directas y calcula probabilidades por rivales comunes entre dos equipos.</div>' +
+        '<button type="button" class="nav-pill active" onclick="switchSection(\'comparativa\')" style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px;">Ir a la Comparativa completa ➔</button>' +
       '</div>';
-
-      html += renderH2HComparison(S, STATE.h2hA, STATE.h2hB);
-      html += '</div>';
 
       document.getElementById('statsContainer').innerHTML = html;
     }
@@ -2846,6 +2823,23 @@
         '</div>' +
       '</div>';
 
+      // 1. ANÁLISIS DIRECTO: Cara a Cara de la temporada (Métricas y H2H)
+      const S = computeStats();
+      html += '<div class="cmp-direct-section" style="margin-bottom:24px;">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">' +
+          '<h3 style="font-size:14px; font-weight:800; color:var(--sc-blue); margin:0;">📊 Rendimiento Directo de la Temporada</h3>' +
+          '<span style="font-size:11.5px; color:var(--text-muted);">Métricas oficiales en liga</span>' +
+        '</div>' +
+        '<div class="st-card" style="margin-bottom:0;">' +
+          renderH2HComparison(S, idA, idB) +
+        '</div>' +
+      '</div>';
+
+      html += '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; margin-top:20px; border-top:1px solid #e2e8f0; padding-top:18px;">' +
+        '<h3 style="font-size:14px; font-weight:800; color:var(--sc-blue); margin:0;">🕸️ Análisis Avanzado por Red de Enfrentamientos Indirectos</h3>' +
+        '<span style="font-size:11.5px; color:var(--text-muted);">Transitividad Niveles 1, 2 y 3</span>' +
+      '</div>';
+
       // Cálculo de caminos
       const rawPaths = findCmpSimplePaths(idA, idB, 4);
 
@@ -2873,8 +2867,9 @@
       if (allIndirect.length === 0 && directMatches.length === 0) {
         html += '<div class="cmp-empty">' +
           '<div class="icon">🕸️</div>' +
-          '<h3>Sin conexiones indirectas aún</h3>' +
+          '<h3>Sin conexiones en el grafo aún</h3>' +
           '<p><strong>' + escapeHtml(A.equipo) + '</strong> y <strong>' + escapeHtml(B.equipo) + '</strong> aún no comparten rivales comunes ni cadenas transitivas en las jornadas disputadas.</p>' +
+          '<p style="margin-top:10px; font-size:12px; color:#64748b;">A medida que se disputen los partidos de cada jornada, se construirán automáticamente las rutas transitivas de Nivel 1, 2 y 3.</p>' +
         '</div>';
         cont.innerHTML = html;
         return;
@@ -2976,22 +2971,7 @@
         '</div>' +
       '</div>';
 
-      // 2. Enfrentamiento directo si existe
-      if (directMatches.length > 0) {
-        const dm = directMatches[0].edges[0].match;
-        html += '<div class="cmp-direct-banner">' +
-          '<div class="cmp-direct-left">' +
-            '<div style="font-size:22px;">⚽</div>' +
-            '<div class="cmp-direct-info">' +
-              '<h4>Enfrentamiento Directo Ya Disputado (Jornada ' + dm.jornada + ')</h4>' +
-              '<p>' + escapeHtml(dm.equipoLocal) + ' ' + dm.golesLocal + ' - ' + dm.golesVisitante + ' ' + escapeHtml(dm.equipoVisitante) + ' (' + (dm.fecha || '') + ' · ' + (dm.campo || '') + ')</p>' +
-            '</div>' +
-          '</div>' +
-          '<div class="cmp-direct-tag">Resultado: ' + dm.resultado + '</div>' +
-        '</div>';
-      }
-
-      // 3. Controles de filtro
+      // 2. Controles de filtro
       const filter = STATE.comparativaFilter || 'all';
       const favACnt = allIndirect.filter(r => r.favors === 'A').length;
       const favBCnt = allIndirect.filter(r => r.favors === 'B').length;
