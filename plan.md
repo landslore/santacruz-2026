@@ -60,4 +60,6 @@ Web interactiva SPA responsive para el seguimiento de la liga del **Santa Cruz C
 - [x] **Fase 4: Verificación y Documentación Agéntica**
   - Verificación visual con Chrome headless de todas las vistas en móvil (360px). ✅ *Completado*.
   - Redacción de `AGENTS.md` con las instrucciones de arquitectura y mantenimiento. ✅ *Completado*.
+  - Rediseño de tarjeta de partido en escritorio (>600px): estructura flex idéntica a Somos Valle con `[Escudo L] [Nombre L] [Píldora Marcador] [Nombre V] [Escudo V]`. ✅ *Completado*.
+  - Corrección de ordenación en ranking «🛡️ Mejor defensa»: corregida la doble negación que mostraba las peores defensas primero. Ahora lista ordenado por menos goles encajados (Santa Cruz C.F. asciende al puesto #2 con solo 1 GC en 3 PJ). ✅ *Completado*.
 
