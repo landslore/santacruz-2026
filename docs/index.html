@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Santa Cruz C.F. 2026 · Prebenjamín Primera Futgal A Coruña G1</title>
+  <link rel="icon" type="image/webp" href="https://www.futbuteo.com/escudos/80/gal-19230216.webp">
+  <style>
+    :root {
+      --sc-blue: #0b2545;
+      --sc-blue-dark: #07192f;
+      --sc-blue-light: #e8f0fe;
+      --sc-yellow: #fff3cd;
+      --sc-yellow-border: #ffeeba;
+      --sc-gold: #ffb703;
+      --sc-gold-dark: #fb8500;
+      --score-red: #d32f2f;
+      --text-main: #212529;
+      --text-muted: #6c757d;
+      --bg-card: #ffffff;
+      --border-color: #dee2e6;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 8px 10px 24px 10px;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: var(--text-main);
+      background-color: #f8f9fa;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Contenedor del Menú Superior en 2 Filas */
+    .top-nav-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--sc-blue);
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .top-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    /* Fila 1: Resultados + Clasificación + Estadísticas (3 columnas exactas) */
+    .top-nav-row-1 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      width: 100%;
+    }
+
+    /* Fila 2: Santa Cruz C.F. + Actualizar */
+    .top-nav-row-2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .btn-mi-equipo {
+      flex: 1 1 auto;
+      min-width: 0;
+      background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+      color: #07192f;
+      border: 1px solid #d47a00;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 2px 4px rgba(251, 133, 0, 0.25);
+    }
+
+    .btn-mi-equipo:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-mi-equipo img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+    }
+
+    .btn-refresh {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      background-color: #ffffff;
+      color: var(--sc-blue);
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-weight: bold;
+      font-size: 12.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .btn-refresh:hover {
+      background-color: #e9ecef;
+    }
+
+    .nav-pill {
+      text-decoration: none;
+      padding: 9px 8px;
+      font-weight: bold;
+      background-color: #cbd5e1;
+      border: 1px solid #b0bec5;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      color: var(--sc-blue);
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 13px;
+      text-align: center;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-pill:hover {
+      background-color: #b0bec5;
+    }
+
+    .nav-pill.active {
+      background-color: var(--sc-blue);
+      color: #ffffff;
+      border-color: var(--sc-blue-dark);
+      box-shadow: 0 2px 5px rgba(11, 37, 69, 0.3);
+    }
+
+    /* Estado de sincronización */
+    .status-meta {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    /* Tarjetas de Jornadas */
+    .tabGroup {
+      padding: 12px 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: #ffffff;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .jornadas-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 8px 10px;
+      background-color: #f1f5f9;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .jornadas-buttons {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      padding-bottom: 2px;
+    }
+
+    .jornadas-buttons::-webkit-scrollbar {
+      display: none;
+    }
+
+    .jornada-label {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-weight: bold;
+      color: var(--sc-blue);
+      margin-right: 4px;
+      font-size: 12.5px;
+    }
+
+    .jornadaBtn {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 30px;
+      padding: 0 7px;
+      margin: 1px;
+      color: var(--sc-blue);
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: normal;
+      text-decoration: none;
+      font-size: 12.5px;
+      transition: all 0.15s ease;
+    }
+
+    .jornadaBtn:hover {
+      background-color: var(--sc-blue-light);
+    }
+
+    .jornadaBtn.active {
+      font-weight: bold;
+      background-color: var(--sc-blue);
+      color: #ffffff;
+      border-color: var(--sc-blue-dark);
+    }
+
+    .jornada-fecha-info {
+      font-size: 12.5px;
+      font-weight: bold;
+      color: #475569;
+    }
+
+    /* Tarjetas de Partido (.game) */
+    .game {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+      padding: 12px 10px;
+      margin-bottom: 12px;
+      color: #334155;
+      position: relative;
+    }
+
+    .game.santacruz-game {
+      background-color: #fffdf5;
+      border: 2px solid var(--sc-gold);
+      box-shadow: 0 3px 8px rgba(251, 133, 0, 0.2);
+    }
+
+    .game-header-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .badge-jornada {
+      background-color: var(--sc-blue);
+      color: white;
+      font-weight: bold;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .badge-result {
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .badge-win { background-color: #2e7d32; color: white; }
+    .badge-draw { background-color: #ef6c00; color: white; }
+    .badge-loss { background-color: #c62828; color: white; }
+    .badge-pending { background-color: #e2e8f0; color: #475569; }
+
+    /* Desktop layout for match card */
+    .game-body-desktop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .game .localLogo,
+    .game .visitorLogo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .game .localLogo img,
+    .game .visitorLogo img,
+    .img-circle {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .game .localName,
+    .game .visitorName {
+      font-weight: bold;
+      color: var(--sc-blue);
+      font-size: 13.5px;
+      cursor: pointer;
+      line-height: 1.25;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .game .localName:hover,
+    .game .visitorName:hover {
+      text-decoration: underline;
+    }
+
+    .game .santacruz-team-text {
+      background: var(--sc-yellow);
+      color: #07192f;
+      padding: 3px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .score-box {
+      min-width: 68px;
+      padding: 6px 10px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-weight: 900;
+      color: var(--score-red);
+      font-size: 1.6em;
+      line-height: 1;
+    }
+
+    .score-box.pending {
+      font-size: 1.1em;
+      color: #64748b;
+      font-weight: bold;
+    }
+
+    .game .date-meta {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      margin-top: 6px;
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 6px;
+    }
+
+    .game .address-meta {
+      text-align: center;
+      margin-top: 2px;
+      font-size: 11.5px;
+    }
+
+    .game .address-meta a {
+      color: #0284c7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .game .address-meta a:hover {
+      text-decoration: underline;
+    }
+
+    /* Tabla de Clasificación */
+    .table-responsive {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 6px;
+    }
+
+    .table-scroll-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--sc-blue);
+      background-color: var(--sc-blue-light);
+      padding: 5px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .classification-table {
+      width: 100%;
+      min-width: 520px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .classification-table thead th,
+    .classification-table thead td,
+    .classification-table thead [data-col] {
+      background-color: var(--sc-blue) !important;
+      color: #ffffff !important;
+      padding: 9px 6px;
+      text-align: center;
+      border: 1px solid var(--sc-blue-dark);
+      border-top: none;
+      border-bottom: 2px solid var(--sc-blue-dark);
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .classification-table thead [data-col="team"] {
+      text-align: center;
+    }
+
+    .classification-table td {
+      padding: 8px 6px;
+      border: 1px solid #eee;
+      border-top: none;
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .classification-table tbody tr:nth-child(even):not(.santacruz-row) {
+      background-color: #f8fafc;
+    }
+
+    .classification-table tbody tr:hover {
+      background-color: var(--sc-blue-light) !important;
+      cursor: pointer;
+    }
+
+    .santacruz-row {
+      background-color: var(--sc-yellow) !important;
+      font-weight: bold;
+      color: #07192f;
+      border: 2px solid var(--sc-gold);
+    }
+
+    .classification-table tbody [data-col="team"] {
+      text-align: left;
+      font-weight: bold;
+      color: var(--sc-blue);
+      white-space: normal;
+      min-width: 150px;
+    }
+
+    .classification-table tbody [data-col="team"]:hover {
+      text-decoration: underline;
+    }
+
+    .classification-table tbody [data-col="pos"] {
+      font-weight: bold;
+      background-color: #fef08a;
+      color: var(--sc-blue);
+    }
+
+    .classification-table tbody [data-col="ptos"] {
+      font-weight: bold;
+      color: var(--score-red);
+      font-size: 1.08em;
+    }
+
+    .classification-table img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Calendario de Equipo */
+    .team-calendar-header {
+      background: linear-gradient(135deg, #0b2545 0%, #07192f 100%);
+      color: white;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 3px 8px rgba(11, 37, 69, 0.25);
+    }
+
+    .team-header-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .team-header-main img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: white;
+      padding: 3px;
+      object-fit: contain;
+    }
+
+    .team-header-title h2 {
+      margin: 0 0 3px 0;
+      font-size: 1.25em;
+      color: var(--sc-gold);
+    }
+
+    .team-header-sub {
+      font-size: 12px;
+      color: #e2e8f0;
+    }
+
+    .team-stats-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 6px;
+      padding: 4px 8px;
+      text-align: center;
+      min-width: 54px;
+    }
+
+    .stat-pill .lbl {
+      display: block;
+      font-size: 9.5px;
+      text-transform: uppercase;
+      color: #93c5fd;
+    }
+
+    .stat-pill .val {
+      font-size: 13.5px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .calendar-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .btn-back {
+      background-color: var(--sc-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .team-selector-dropdown {
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 13px;
+      color: var(--sc-blue);
+      font-weight: bold;
+      background: white;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #475569;
+      cursor: pointer;
+    }
+
+    .filter-chip.active {
+      background: var(--sc-blue);
+      color: white;
+      border-color: var(--sc-blue);
+    }
+
+    /* Sección Estadísticas */
+    .st-cifras {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .st-cifras > div {
+      background: linear-gradient(135deg, #0b2545 0%, #134074 100%);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .st-cifras b {
+      display: block;
+      font-size: 1.7em;
+      color: var(--sc-gold);
+      line-height: 1.1;
+    }
+
+    .st-cifras span {
+      font-size: 11.5px;
+      opacity: 0.95;
+    }
+
+    .st-cifras small {
+      display: block;
+      font-size: 10px;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .st-zona {
+      font-size: 15px;
+      color: var(--sc-blue);
+      margin: 16px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .st-rk-g {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .st-card {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+
+    .st-card-h {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .st-card-h b {
+      color: var(--sc-blue);
+      font-size: 13.5px;
+    }
+
+    .st-card-h small {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .st-rk {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      border-top: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+
+    .st-rk:hover {
+      background: var(--sc-blue-light);
+    }
+
+    .st-rk.santacruz {
+      background: var(--sc-yellow);
+      font-weight: bold;
+    }
+
+    .st-rk i {
+      font-style: normal;
+      font-weight: bold;
+      color: #64748b;
+      width: 20px;
+      text-align: center;
+    }
+
+    .st-rk .nm {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .st-rk .val {
+      font-weight: bold;
+      color: var(--sc-blue);
+    }
+
+    .st-h2h-sel {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .st-h2h-sel select {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 13px;
+      color: var(--sc-blue);
+      font-weight: 500;
+    }
+
+    .st-h2h-sel b {
+      color: var(--score-red);
+      font-size: 15px;
+    }
+
+    .st-cmp {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 4px 8px;
+      align-items: center;
+      font-size: 12.5px;
+      margin-bottom: 8px;
+    }
+
+    .st-cmp .lbl {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 11px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .st-cmp .va, .st-cmp .vb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: bold;
+      min-width: 0;
+    }
+
+    .st-cmp .va { justify-content: flex-end; }
+    .st-cmp .va span, .st-cmp .vb span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .st-bar { height: 7px; border-radius: 4px; background: #e2e8f0; flex: 1; position: relative; overflow: hidden; }
+    .st-bar > span { position: absolute; top: 0; bottom: 0; background: var(--sc-blue); border-radius: 4px; }
+    .st-cmp .va .st-bar > span { right: 0; }
+    .st-cmp .vb .st-bar > span { left: 0; background: #e11d48; }
+    .st-cmp .va .st-bar { direction: rtl; }
+
+    /* Indicador de carga */
+    .loading-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e2e8f0;
+      border-top-color: var(--sc-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===================== RESPONSIVE MÓVIL ===================== */
+    @media (max-width: 768px) {
+      body { padding: 6px 8px 24px 8px; font-size: 13.5px; }
+      .top-nav-container { gap: 6px; }
+      .top-nav-row-1 { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+      .top-nav-row-1 .nav-pill { padding: 8px 4px; font-size: 12px; }
+      .top-nav-row-2 { gap: 5px; }
+      .btn-mi-equipo { font-size: 12px; padding: 8px 10px; }
+      .btn-refresh { font-size: 12px; padding: 8px 10px; }
+      .st-cifras { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .st-rk-g { grid-template-columns: 1fr; gap: 8px; }
+      .st-card { width: 100%; box-sizing: border-box; }
+      .st-h2h-sel { flex-direction: column; width: 100%; gap: 6px; }
+      .st-h2h-sel select { width: 100%; font-size: 12.5px; }
+      .st-h2h-sel b { display: none; }
+      .team-calendar-header { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 10px; }
+      .team-stats-pills { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
+      .stat-pill { min-width: 0; padding: 4px 2px; }
+      .stat-pill .val { font-size: 12.5px; }
+      .stat-pill .lbl { font-size: 9px; }
+      .calendar-toolbar { flex-direction: column; align-items: stretch; gap: 8px; }
+      .filter-chips { justify-content: space-between; }
+      .filter-chip { flex: 1; text-align: center; padding: 7px 6px; }
+    }
+
+    /* Tarjetas de Partido en móviles (< 600px): CSS Grid de 2 filas legibles */
+    @media (max-width: 600px) {
+      .game {
+        display: grid;
+        grid-template-columns: 34px 1fr auto;
+        column-gap: 8px;
+        row-gap: 6px;
+        align-items: center;
+        padding: 10px 8px;
+      }
+      .game-header-strip {
+        grid-column: 1 / -1;
+      }
+      .game .localLogo {
+        grid-column: 1;
+        grid-row: 2;
+        width: 34px;
+        height: 34px;
+        justify-self: center;
+      }
+      .game .localName {
+        grid-column: 2;
+        grid-row: 2;
+        text-align: left;
+        font-size: 13px;
+      }
+      .game .visitorLogo {
+        grid-column: 1;
+        grid-row: 3;
+        width: 34px;
+        height: 34px;
+        justify-self: center;
+      }
+      .game .visitorName {
+        grid-column: 2;
+        grid-row: 3;
+        text-align: left;
+        font-size: 13px;
+      }
+      .score-box {
+        grid-column: 3;
+        grid-row: 2 / 4;
+        min-width: 66px;
+        padding: 6px 8px;
+        justify-self: center;
+        align-self: center;
+      }
+      .game .date-meta {
+        grid-column: 1 / -1;
+      }
+      .game .address-meta {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de navegación principal en 2 filas -->
+  <div class="top-nav-container">
+    <!-- Fila 1: Resultados + Clasificacion + Estadisticas -->
+    <div class="top-nav-row top-nav-row-1">
+      <a id="nav-resultados" class="nav-pill active" onclick="switchSection('resultados')">⚽ Resultados</a>
+      <a id="nav-clasificacion" class="nav-pill" onclick="switchSection('clasificacion')">🏆 Clasificación</a>
+      <a id="nav-estadisticas" class="nav-pill" onclick="switchSection('estadisticas')">📊 Estadísticas</a>
+    </div>
+    <!-- Fila 2: Santa Cruz C.F. + Actualizar -->
+    <div class="top-nav-row top-nav-row-2">
+      <button type="button" class="btn-mi-equipo" onclick="openFeaturedTeamCalendar()" title="Ver calendario completo de Santa Cruz C.F.">
+        <img src="https://www.futbuteo.com/escudos/80/gal-19230216.webp" alt="" onerror="this.style.display='none'">
+        <span>⭐ Santa Cruz C.F.</span>
+      </button>
+      <button type="button" id="btnRefresh" class="btn-refresh" onclick="refreshLiveData()">
+        🔄 Actualizar
+      </button>
+    </div>
+  </div>
+
+  <!-- Estado de sincronización -->
+  <div class="status-meta">
+    <span id="compInfoText">Fútbol 8 · Prebenjamín Primera Futgal · A Coruña G1 (14 Equipos)</span>
+    <span id="lastUpdatedText">Cargando datos...</span>
+  </div>
+
+  <!-- Indicador de carga -->
+  <div id="loadingContainer" class="loading-box">
+    <div class="spinner"></div>
+    <div style="font-weight:bold; color:var(--sc-blue);">Cargando partidos y clasificación...</div>
+  </div>
+
+  <!-- SECCIÓN 1: RESULTADOS -->
+  <div id="section-resultados" class="hidden">
+    <div class="tabGroup">
+      <div class="jornadas-bar">
+        <div class="jornadas-buttons" id="jornadasButtonsContainer"></div>
+        <div id="jornadaFechaInfo" class="jornada-fecha-info"></div>
+      </div>
+      <div id="matchesContainer"></div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: CLASIFICACIÓN -->
+  <div id="section-clasificacion" class="hidden">
+    <div class="tabGroup">
+      <div style="font-size:12px; color:#555; margin-bottom:6px;">
+        💡 <b>Consejo:</b> Pulsa sobre cualquier equipo de la tabla para ver su <b>calendario completo</b>.
+      </div>
+      <div class="table-scroll-hint">👈 Desliza la tabla para ver todos los datos (Goles, Puntos, Partidos) 👉</div>
+      <div id="clasifTableContainer" class="table-responsive"></div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: ESTADÍSTICAS -->
+  <div id="section-estadisticas" class="hidden">
+    <div class="tabGroup">
+      <div id="statsContainer"></div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: CALENDARIO DE EQUIPO -->
+  <div id="section-calendario" class="hidden">
+    <div class="calendar-toolbar">
+      <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+        <button type="button" class="btn-back" onclick="goBackFromCalendar()">⬅ Volver</button>
+        <select id="teamQuickSelect" class="team-selector-dropdown" onchange="goToTeamById(Number(this.value))"></select>
+      </div>
+      <div class="filter-chips">
+        <button type="button" id="chip-all" class="filter-chip active" onclick="setCalendarFilter('all')">Todos</button>
+        <button type="button" id="chip-played" class="filter-chip" onclick="setCalendarFilter('played')">Jugados</button>
+        <button type="button" id="chip-pending" class="filter-chip" onclick="setCalendarFilter('pending')">Pendientes</button>
+      </div>
+    </div>
+
+    <div id="teamCalendarHeader" class="team-calendar-header"></div>
+    <div style="font-size:12px; color:#555; margin-bottom:10px;">
+      💡 <b>Navegación entre rivales:</b> Pulsa sobre el nombre de cualquier equipo en las tarjetas para ver su calendario.
+    </div>
+    <div id="teamMatchesContainer"></div>
+  </div>
+
+  <script>
+    const LOCAL_CACHE_KEY = 'SANTACRUZ_2026_LOCAL_CACHE_V1';
+    const LOCAL_CACHE_TTL_MS = 48 * 60 * 60 * 1000; // 48 horas
+    const FEATURED_TEAM_ID = 19230216;
+
+    const urlParams = new URLSearchParams(window.location.search || '');
+    const INITIAL_VIEW = urlParams.get('page') || 'resultados';
+    const INITIAL_JORNADA = parseInt(urlParams.get('j'), 10) || 0;
+    const INITIAL_TEAM_ID = parseInt(urlParams.get('team'), 10) || 0;
+
+    let STATE = {
+      data: null,
+      activeSection: 'resultados',
+      previousSection: 'resultados',
+      selectedJornada: 1,
+      selectedTeamId: FEATURED_TEAM_ID,
+      calendarFilter: 'all', // 'all' | 'played' | 'pending'
+      h2hA: FEATURED_TEAM_ID,
+      h2hB: 0
+    };
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeAttr(str) {
+      return escapeHtml(str);
+    }
+
+    function formatElapsedSince(timestampMs) {
+      if (!timestampMs) return '';
+      const diffMs = Math.max(0, Date.now() - timestampMs);
+      const minutes = Math.floor(diffMs / (60 * 1000));
+      const hours = Math.floor(diffMs / (60 * 60 * 1000));
+      const days = Math.floor(diffMs / (24 * 60 * 60 * 1000));
+
+      if (minutes < 1) return 'hace unos segundos';
+      if (minutes < 60) return 'hace ' + minutes + (minutes === 1 ? ' minuto' : ' minutos');
+      if (hours < 24) {
+        const remMin = minutes % 60;
+        return 'hace ' + hours + (hours === 1 ? ' hora' : ' horas') + (remMin > 0 ? ', ' + remMin + ' min' : '');
+      }
+      return 'hace ' + days + (days === 1 ? ' día' : ' días');
+    }
+
+    function updateHeaderMetaText() {
+      if (!STATE.data) return;
+      const d = STATE.data;
+      const rel = formatElapsedSince(d.fetchedAtMs);
+      document.getElementById('compInfoText').textContent =
+        d.deporte + ' · ' + d.competicion + ' · ' + d.grupo + (rel ? ' - datos actualizados ' + rel : '');
+      document.getElementById('lastUpdatedText').textContent =
+        'Última sincr.: ' + (d.updatedAt || '');
+    }
+
+    function loadFromLocalCache() {
+      try {
+        const raw = window.localStorage.getItem(LOCAL_CACHE_KEY);
+        if (!raw) return null;
+        const cached = JSON.parse(raw);
+        if (Date.now() - cached.cachedAtMs > LOCAL_CACHE_TTL_MS) {
+          window.localStorage.removeItem(LOCAL_CACHE_KEY);
+          return null;
+        }
+        return cached.data;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function saveToLocalCache(data) {
+      try {
+        window.localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify({
+          cachedAtMs: Date.now(),
+          data: data
+        }));
+      } catch (e) {}
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      setInterval(updateHeaderMetaText, 30000);
+
+      const forceRefresh = urlParams.get('refresh') === '1' || urlParams.get('refresh') === 'true';
+      if (!forceRefresh) {
+        const cached = loadFromLocalCache();
+        if (cached && cached.ok) {
+          initializeWithData(cached, true);
+          return;
+        }
+      }
+      fetchData(forceRefresh);
+    });
+
+    function fetchData(forceRefresh) {
+      const btn = document.getElementById('btnRefresh');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ Actualizando...';
+      }
+      if (!STATE.data) {
+        document.getElementById('loadingContainer').classList.remove('hidden');
+      }
+
+      const cacheBust = forceRefresh ? ('?_t=' + Date.now()) : '';
+      fetch('./data.json' + cacheBust)
+        .then(r => r.json())
+        .then(data => {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔄 Actualizar';
+          }
+          if (data && data.ok) {
+            saveToLocalCache(data);
+            initializeWithData(data, !STATE.data);
+          } else {
+            showError('No se pudieron procesar los datos de la liga.');
+          }
+        })
+        .catch(err => {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔄 Actualizar';
+          }
+          showError('Error al conectar: ' + err.message);
+        });
+    }
+
+    function refreshLiveData() {
+      fetchData(true);
+    }
+
+    function showError(msg) {
+      const c = document.getElementById('loadingContainer');
+      c.classList.remove('hidden');
+      c.innerHTML = '<div style="color:#d32f2f; font-weight:bold; margin-bottom:8px;">⚠️ ' + escapeHtml(msg) + '</div>' +
+        '<button class="btn-refresh" onclick="refreshLiveData()">Reintentar ahora</button>';
+    }
+
+    function initializeWithData(data, isFirstLoad) {
+      STATE.data = data;
+      document.getElementById('loadingContainer').classList.add('hidden');
+      updateHeaderMetaText();
+
+      // Jornada inicial: o la pasada por URL ?j=X o la siguiente detectada
+      STATE.selectedJornada = (INITIAL_JORNADA >= 1 && INITIAL_JORNADA <= data.jornadas.length)
+        ? INITIAL_JORNADA
+        : (data.jornadaActual || 1);
+
+      populateTeamDropdown();
+
+      if (isFirstLoad) {
+        if (INITIAL_TEAM_ID && data.teams && data.teams[INITIAL_TEAM_ID]) {
+          goToTeamById(INITIAL_TEAM_ID);
+          return;
+        }
+
+        const v = String(INITIAL_VIEW || 'resultados').toLowerCase();
+        if (v.includes('clasif')) {
+          switchSection('clasificacion');
+        } else if (v.includes('estad') || v.includes('stats')) {
+          switchSection('estadisticas');
+        } else {
+          switchSection('resultados');
+        }
+      } else {
+        renderActiveSection();
+      }
+    }
+
+    function switchSection(sec) {
+      if (STATE.activeSection !== 'calendario') {
+        STATE.previousSection = STATE.activeSection;
+      }
+      STATE.activeSection = sec;
+
+      ['resultados', 'clasificacion', 'estadisticas', 'calendario'].forEach(s => {
+        const el = document.getElementById('section-' + s);
+        if (el) {
+          if (s === sec) el.classList.remove('hidden');
+          else el.classList.add('hidden');
+        }
+        const nav = document.getElementById('nav-' + s);
+        if (nav) {
+          if (s === sec) nav.classList.add('active');
+          else nav.classList.remove('active');
+        }
+      });
+
+      renderActiveSection();
+    }
+
+    function renderActiveSection() {
+      if (!STATE.data) return;
+      if (STATE.activeSection === 'resultados') renderResultados();
+      else if (STATE.activeSection === 'clasificacion') renderClasificacion();
+      else if (STATE.activeSection === 'estadisticas') renderEstadisticas();
+      else if (STATE.activeSection === 'calendario') renderTeamCalendar();
+    }
+
+    /* ===================== RESULTADOS ===================== */
+    function renderResultados() {
+      const jornadas = STATE.data.jornadas || [];
+      const cont = document.getElementById('jornadasButtonsContainer');
+      cont.innerHTML = jornadas.map(j => {
+        const active = j.numero === STATE.selectedJornada ? ' active' : '';
+        return '<button type="button" class="jornadaBtn' + active + '" onclick="selectJornada(' + j.numero + ')">' + j.numero + '</button>';
+      }).join('');
+
+      // Auto-centrar botón activo
+      const activeBtn = cont.querySelector('.jornadaBtn.active');
+      if (activeBtn) {
+        cont.scrollLeft = activeBtn.offsetLeft - cont.offsetLeft - (cont.clientWidth - activeBtn.offsetWidth) / 2;
+      }
+
+      const curJ = jornadas.find(j => j.numero === STATE.selectedJornada) || jornadas[0];
+      if (!curJ) return;
+
+      document.getElementById('jornadaFechaInfo').textContent =
+        'Jornada ' + curJ.numero + (curJ.fecha ? ' (' + curJ.fecha + ')' : '') + (curJ.disputada ? ' · Terminada' : ' · En juego / Próxima');
+
+      const matchesCont = document.getElementById('matchesContainer');
+      matchesCont.innerHTML = curJ.partidos.map(m => renderMatchCard(m)).join('');
+    }
+
+    function selectJornada(num) {
+      STATE.selectedJornada = num;
+      renderResultados();
+    }
+
+    function renderMatchCard(m) {
+      const isSC = m.esLocalSantaCruz || m.esVisitanteSantaCruz;
+      const cardClass = 'game' + (isSC ? ' santacruz-game' : '');
+      
+      let badgeClass = 'badge-result badge-pending';
+      let badgeText = 'PENDIENTE';
+      if (m.jugado) {
+        if (isSC) {
+          const scGoals = m.esLocalSantaCruz ? m.golesLocal : m.golesVisitante;
+          const oppGoals = m.esLocalSantaCruz ? m.golesVisitante : m.golesLocal;
+          if (scGoals > oppGoals) { badgeClass = 'badge-result badge-win'; badgeText = 'VICTORIA'; }
+          else if (scGoals < oppGoals) { badgeClass = 'badge-result badge-loss'; badgeText = 'DERROTA'; }
+          else { badgeClass = 'badge-result badge-draw'; badgeText = 'EMPATE'; }
+        } else {
+          badgeClass = 'badge-result badge-win';
+          badgeText = 'FINALIZADO';
+        }
+      }
+
+      const scoreHtml = m.jugado
+        ? '<div class="score-box">' + m.golesLocal + ' - ' + m.golesVisitante + '</div>'
+        : '<div class="score-box pending">-</div>';
+
+      const localHighlight = m.esLocalSantaCruz ? ' santacruz-team-text' : '';
+      const visitHighlight = m.esVisitanteSantaCruz ? ' santacruz-team-text' : '';
+
+      return '<div class="' + cardClass + '">' +
+        '<div class="game-header-strip">' +
+          '<span class="badge-jornada">Jornada ' + m.jornada + '</span>' +
+          '<span class="' + badgeClass + '">' + badgeText + '</span>' +
+        '</div>' +
+        '<div class="localLogo">' +
+          '<img src="' + escapeAttr(m.equipoLocalEscudo) + '" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+        '</div>' +
+        '<div class="localName' + localHighlight + '" onclick="goToTeamById(' + m.equipoLocalId + ')">' +
+          escapeHtml(m.equipoLocal) + (m.esLocalSantaCruz ? ' ⭐' : '') +
+        '</div>' +
+        '<div class="visitorLogo">' +
+          '<img src="' + escapeAttr(m.equipoVisitanteEscudo) + '" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+        '</div>' +
+        '<div class="visitorName' + visitHighlight + '" onclick="goToTeamById(' + m.equipoVisitanteId + ')">' +
+          escapeHtml(m.equipoVisitante) + (m.esVisitanteSantaCruz ? ' ⭐' : '') +
+        '</div>' +
+        scoreHtml +
+        (m.fecha || m.hora ? '<div class="date-meta">📅 ' + escapeHtml(m.fecha) + (m.hora ? ' ' + escapeHtml(m.hora) : '') + '</div>' : '') +
+        (m.campo ? '<div class="address-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(m.campo + ' A Coruña') + '" target="_blank" rel="noopener">' + escapeHtml(m.campo) + '</a></div>' : '') +
+      '</div>';
+    }
+
+    /* ===================== CLASIFICACIÓN ===================== */
+    function renderClasificacion() {
+      const rows = STATE.data.clasificacion || [];
+      let html = '<table class="classification-table">' +
+        '<thead><tr>' +
+          '<td data-col="logo"></td>' +
+          '<td data-col="pos">#</td>' +
+          '<td data-col="team">Equipo</td>' +
+          '<td data-col="ptos">Pts</td>' +
+          '<td data-col="pj">PJ</td>' +
+          '<td data-col="pg">PG</td>' +
+          '<td data-col="pe">PE</td>' +
+          '<td data-col="pp">PP</td>' +
+          '<td data-col="gf">GF</td>' +
+          '<td data-col="gc">GC</td>' +
+          '<td data-col="diff">Dif</td>' +
+        '</tr></thead><tbody>';
+
+      rows.forEach(r => {
+        const rowClass = r.esSantaCruz ? 'santacruz-row' : '';
+        html += '<tr class="' + rowClass + '" onclick="goToTeamById(' + r.equipoId + ')" title="Ver calendario de ' + escapeAttr(r.equipo) + '">' +
+          '<td data-col="logo"><img src="' + escapeAttr(r.escudo) + '" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" /></td>' +
+          '<td data-col="pos">' + r.posicion + '</td>' +
+          '<td data-col="team">' + escapeHtml(r.equipo) + (r.esSantaCruz ? ' ⭐' : '') + '</td>' +
+          '<td data-col="ptos">' + r.puntos + '</td>' +
+          '<td data-col="pj">' + r.pj + '</td>' +
+          '<td data-col="pg">' + r.pg + '</td>' +
+          '<td data-col="pe">' + r.pe + '</td>' +
+          '<td data-col="pp">' + r.pp + '</td>' +
+          '<td data-col="gf">' + r.gf + '</td>' +
+          '<td data-col="gc">' + r.gc + '</td>' +
+          '<td data-col="diff">' + (r.diff > 0 ? '+' + r.diff : r.diff) + '</td>' +
+        '</tr>';
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('clasifTableContainer').innerHTML = html;
+    }
+
+    /* ===================== ESTADÍSTICAS ===================== */
+    function computeStats() {
+      const teams = STATE.data.equipos || [];
+      const allMatches = [];
+      (STATE.data.jornadas || []).forEach(j => {
+        (j.partidos || []).forEach(m => {
+          if (m.jugado) allMatches.push(m);
+        });
+      });
+
+      const totalMatches = allMatches.length;
+      let totalGoals = 0;
+      let homeWins = 0;
+      let draws = 0;
+      let awayWins = 0;
+      let maxDiffMatch = null;
+      let maxDiffVal = -1;
+
+      allMatches.forEach(m => {
+        const gl = m.golesLocal || 0;
+        const gv = m.golesVisitante || 0;
+        totalGoals += gl + gv;
+        if (gl > gv) homeWins++;
+        else if (gl === gv) draws++;
+        else awayWins++;
+
+        const diff = Math.abs(gl - gv);
+        if (diff > maxDiffVal) {
+          maxDiffVal = diff;
+          maxDiffMatch = m;
+        }
+      });
+
+      // Calcular rendimiento casa/fuera de cada equipo a partir de partidos jugados
+      const teamStats = {};
+      teams.forEach(t => {
+        teamStats[t.id] = {
+          id: t.id,
+          nombre: t.nombre,
+          escudo: t.escudo,
+          esSantaCruz: t.esSantaCruz,
+          posicion: t.posicion,
+          pts: t.puntos,
+          pj: t.pj,
+          gf: t.gf,
+          gc: t.gc,
+          diff: t.diff,
+          forma: t.forma,
+          homePts: 0,
+          homePj: 0,
+          awayPts: 0,
+          awayPj: 0,
+          unbeatenStreak: 0,
+          noWinStreak: 0
+        };
+      });
+
+      allMatches.forEach(m => {
+        const gl = m.golesLocal || 0;
+        const gv = m.golesVisitante || 0;
+        if (teamStats[m.equipoLocalId]) {
+          teamStats[m.equipoLocalId].homePj++;
+          if (gl > gv) teamStats[m.equipoLocalId].homePts += 3;
+          else if (gl === gv) teamStats[m.equipoLocalId].homePts += 1;
+        }
+        if (teamStats[m.equipoVisitanteId]) {
+          teamStats[m.equipoVisitanteId].awayPj++;
+          if (gv > gl) teamStats[m.equipoVisitanteId].awayPts += 3;
+          else if (gv === gl) teamStats[m.equipoVisitanteId].awayPts += 1;
+        }
+      });
+
+      // Calcular rachas a partir de forma ("GGG" -> 3 invicto)
+      teams.forEach(t => {
+        const f = t.forma || '';
+        let u = 0;
+        for (let i = f.length - 1; i >= 0; i--) {
+          if (f[i] === 'G' || f[i] === 'E') u++;
+          else break;
+        }
+        let nw = 0;
+        for (let i = f.length - 1; i >= 0; i--) {
+          if (f[i] === 'P' || f[i] === 'E') nw++;
+          else break;
+        }
+        if (teamStats[t.id]) {
+          teamStats[t.id].unbeatenStreak = u;
+          teamStats[t.id].noWinStreak = nw;
+        }
+      });
+
+      return {
+        totalMatches,
+        totalGoals,
+        goalsPerMatch: totalMatches ? (totalGoals / totalMatches).toFixed(2) : '0.00',
+        homeWinPct: totalMatches ? Math.round((homeWins / totalMatches) * 100) : 0,
+        drawPct: totalMatches ? Math.round((draws / totalMatches) * 100) : 0,
+        awayWinPct: totalMatches ? Math.round((awayWins / totalMatches) * 100) : 0,
+        maxDiffMatch,
+        teamList: Object.values(teamStats),
+        allMatches
+      };
+    }
+
+    function renderEstadisticas() {
+      const S = computeStats();
+      let html = '<div class="st-cifras">' +
+        '<div><b>' + S.goalsPerMatch + '</b><span>goles por partido</span><small>' + S.totalGoals + ' goles en ' + S.totalMatches + ' partidos</small></div>' +
+        '<div><b>' + S.homeWinPct + '%</b><span>gana el local</span><small>visitante: ' + S.awayWinPct + '%</small></div>' +
+        '<div><b>' + S.drawPct + '%</b><span>empates</span><small>' + Math.round((S.drawPct * S.totalMatches)/100) + ' de ' + S.totalMatches + '</small></div>' +
+        '<div><b>' + (S.maxDiffMatch ? S.maxDiffMatch.resultado : '-') + '</b><span>mayor goleada</span><small>' + (S.maxDiffMatch ? escapeHtml(S.maxDiffMatch.equipoLocal) + ' vs ' + escapeHtml(S.maxDiffMatch.equipoVisitante) : 'Sin datos') + '</small></div>' +
+      '</div>';
+
+      html += '<h2 class="st-zona">Rankings del Grupo A Coruña · G1</h2><div class="st-rk-g">';
+
+      const rankings = [
+        { t: '🔥 Mejor ataque', s: 'goles a favor', v: x => x.gf, sub: x => x.gf + ' GF en ' + x.pj + ' PJ' },
+        { t: '🛡️ Mejor defensa', s: 'menos goles en contra', v: x => -x.gc, sub: x => x.gc + ' GC en ' + x.pj + ' PJ', desc: true },
+        { t: '🏠 Mejor en casa', s: 'puntos de local', v: x => x.homePts, sub: x => x.homePts + ' pts (' + x.homePj + ' PJ)' },
+        { t: '✈️ Mejor fuera', s: 'puntos de visitante', v: x => x.awayPts, sub: x => x.awayPts + ' pts (' + x.awayPj + ' PJ)' }
+      ];
+
+      rankings.forEach(rk => {
+        const sorted = S.teamList.slice().sort((a, b) => rk.desc ? rk.v(a) - rk.v(b) : rk.v(b) - rk.v(a));
+        html += '<div class="st-card"><div class="st-card-h"><b>' + rk.t + '</b><small>' + rk.s + '</small></div>';
+        sorted.slice(0, 5).forEach((t, i) => {
+          const scClass = t.esSantaCruz ? ' santacruz' : '';
+          html += '<div class="st-rk' + scClass + '" onclick="goToTeamById(' + t.id + ')">' +
+            '<i>' + (i + 1) + '</i>' +
+            '<img src="' + escapeAttr(t.escudo) + '" width="22" height="22" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+            '<span class="nm">' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</span>' +
+            '<span class="val">' + rk.sub(t) + '</span>' +
+          '</div>';
+        });
+        // Si Santa Cruz no está en top 5, mostrarlo en fila extra
+        const scIdx = sorted.findIndex(t => t.esSantaCruz);
+        if (scIdx >= 5) {
+          const sc = sorted[scIdx];
+          html += '<div class="st-rk santacruz" style="border-top:1px dashed #ffa000; margin-top:4px;" onclick="goToTeamById(' + sc.id + ')">' +
+            '<i>' + (scIdx + 1) + '</i>' +
+            '<img src="' + escapeAttr(sc.escudo) + '" width="22" height="22" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+            '<span class="nm">' + escapeHtml(sc.nombre) + ' ⭐</span>' +
+            '<span class="val">' + rk.sub(sc) + '</span>' +
+          '</div>';
+        }
+        html += '</div>';
+      });
+
+      html += '</div>';
+
+      // Comparador Cara a Cara (H2H)
+      html += '<h2 class="st-zona">Comparador Cara a Cara (H2H)</h2>';
+      html += '<div class="st-card">';
+
+      const optsA = S.teamList.map(t => '<option value="' + t.id + '"' + (t.id === STATE.h2hA ? ' selected' : '') + '>' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</option>').join('');
+      
+      // Preseleccionar en B el próximo rival de Santa Cruz si no está definido
+      if (!STATE.h2hB) {
+        const nextJ = (STATE.data.jornadas || []).find(j => j.numero === STATE.data.jornadaActual);
+        if (nextJ) {
+          const scMatch = (nextJ.partidos || []).find(m => m.esLocalSantaCruz || m.esVisitanteSantaCruz);
+          if (scMatch) {
+            STATE.h2hB = scMatch.esLocalSantaCruz ? scMatch.equipoVisitanteId : scMatch.equipoLocalId;
+          }
+        }
+        if (!STATE.h2hB && S.teamList.length > 1) {
+          STATE.h2hB = S.teamList.find(t => t.id !== STATE.h2hA)?.id || S.teamList[0].id;
+        }
+      }
+
+      const optsB = S.teamList.map(t => '<option value="' + t.id + '"' + (t.id === STATE.h2hB ? ' selected' : '') + '>' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</option>').join('');
+
+      html += '<div class="st-h2h-sel">' +
+        '<select onchange="STATE.h2hA=Number(this.value);renderEstadisticas()">' + optsA + '</select>' +
+        '<b>VS</b>' +
+        '<select onchange="STATE.h2hB=Number(this.value);renderEstadisticas()">' + optsB + '</select>' +
+      '</div>';
+
+      html += renderH2HComparison(S, STATE.h2hA, STATE.h2hB);
+      html += '</div>';
+
+      document.getElementById('statsContainer').innerHTML = html;
+    }
+
+    function renderH2HComparison(S, idA, idB) {
+      const A = S.teamList.find(t => t.id === idA);
+      const B = S.teamList.find(t => t.id === idB);
+      if (!A || !B) return '';
+
+      function cmpRow(label, vA, vB, isMaxBetter) {
+        const numA = typeof vA === 'number' ? vA : parseFloat(vA) || 0;
+        const numB = typeof vB === 'number' ? vB : parseFloat(vB) || 0;
+        const max = Math.max(numA, numB, 1);
+        const pctA = Math.round((numA / max) * 100);
+        const pctB = Math.round((numB / max) * 100);
+
+        return '<div class="st-cmp">' +
+          '<div class="va"><span>' + vA + '</span><div class="st-bar"><span style="width:' + pctA + '%"></span></div></div>' +
+          '<div class="lbl">' + label + '</div>' +
+          '<div class="vb"><div class="st-bar"><span style="width:' + pctB + '%"></span></div><span>' + vB + '</span></div>' +
+        '</div>';
+      }
+
+      let html = '';
+      html += cmpRow('Posición', A.posicion + 'º', B.posicion + 'º', false);
+      html += cmpRow('Puntos', A.pts, B.pts, true);
+      html += cmpRow('Partidos Jugados', A.pj, B.pj, true);
+      html += cmpRow('Goles a Favor', A.gf, B.gf, true);
+      html += cmpRow('Goles en Contra', A.gc, B.gc, false);
+      html += cmpRow('Diferencia', (A.diff > 0 ? '+' + A.diff : A.diff), (B.diff > 0 ? '+' + B.diff : B.diff), true);
+      html += cmpRow('Puntos en Casa', A.homePts, B.homePts, true);
+      html += cmpRow('Puntos Fuera', A.awayPts, B.awayPts, true);
+
+      // Enfrentamientos directos
+      const direct = S.allMatches.filter(m => 
+        (m.equipoLocalId === idA && m.equipoVisitanteId === idB) ||
+        (m.equipoLocalId === idB && m.equipoVisitanteId === idA)
+      );
+
+      html += '<div class="st-card-h" style="margin-top:14px;"><b>Enfrentamientos directos de esta temporada</b><small>' + direct.length + ' partido(s)</small></div>';
+      if (direct.length) {
+        html += direct.map(m => renderMatchCard(m)).join('');
+      } else {
+        html += '<div style="font-size:12px; color:#64748b; padding:6px 0;">Aún no se han enfrentado en las jornadas disputadas.</div>';
+      }
+
+      return html;
+    }
+
+    /* ===================== CALENDARIO DE EQUIPO ===================== */
+    function populateTeamDropdown() {
+      const select = document.getElementById('teamQuickSelect');
+      const teams = STATE.data.equipos || [];
+      select.innerHTML = teams.map(t => 
+        '<option value="' + t.id + '"' + (t.id === STATE.selectedTeamId ? ' selected' : '') + '>' +
+          escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') +
+        '</option>'
+      ).join('');
+    }
+
+    function openFeaturedTeamCalendar() {
+      goToTeamById(FEATURED_TEAM_ID);
+    }
+
+    function goToTeamById(teamId) {
+      STATE.selectedTeamId = teamId;
+      document.getElementById('teamQuickSelect').value = teamId;
+      switchSection('calendario');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBackFromCalendar() {
+      switchSection(STATE.previousSection || 'resultados');
+    }
+
+    function setCalendarFilter(flt) {
+      STATE.calendarFilter = flt;
+      ['all', 'played', 'pending'].forEach(f => {
+        const btn = document.getElementById('chip-' + f);
+        if (btn) {
+          if (f === flt) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      renderTeamCalendar();
+    }
+
+    function renderTeamCalendar() {
+      const teamObj = (STATE.data.teams || {})[STATE.selectedTeamId];
+      if (!teamObj) return;
+
+      document.getElementById('teamCalendarHeader').innerHTML =
+        '<div class="team-header-main">' +
+          '<img src="' + escapeAttr(teamObj.escudo) + '" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+          '<div class="team-header-title">' +
+            '<h2>' + escapeHtml(teamObj.nombre) + (teamObj.esSantaCruz ? ' ⭐' : '') + '</h2>' +
+            '<div class="team-header-sub">Prebenjamín Primera Futgal A Coruña G1 · Posición actual: <b>' + teamObj.posicion + 'º</b></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="team-stats-pills">' +
+          '<div class="stat-pill"><span class="lbl">Puntos</span><span class="val">' + teamObj.puntos + '</span></div>' +
+          '<div class="stat-pill"><span class="lbl">PJ</span><span class="val">' + teamObj.pj + '</span></div>' +
+          '<div class="stat-pill"><span class="lbl">G/E/P</span><span class="val">' + teamObj.pg + '/' + teamObj.pe + '/' + teamObj.pp + '</span></div>' +
+          '<div class="stat-pill"><span class="lbl">GF/GC</span><span class="val">' + teamObj.gf + '/' + teamObj.gc + '</span></div>' +
+          '<div class="stat-pill"><span class="lbl">Diff</span><span class="val">' + (teamObj.diff > 0 ? '+' + teamObj.diff : teamObj.diff) + '</span></div>' +
+        '</div>';
+
+      const allMatches = teamObj.partidos || [];
+      const filtered = allMatches.filter(m => {
+        if (STATE.calendarFilter === 'played') return m.jugado;
+        if (STATE.calendarFilter === 'pending') return !m.jugado;
+        return true;
+      });
+
+      const cont = document.getElementById('teamMatchesContainer');
+      if (!filtered.length) {
+        cont.innerHTML = '<div style="padding:16px; color:#64748b;">No hay partidos para el filtro seleccionado.</div>';
+      } else {
+        cont.innerHTML = filtered.map(m => renderMatchCard(m)).join('');
+      }
+    }
+  </script>
+</body>
+</html>
