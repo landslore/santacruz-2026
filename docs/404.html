@@ -726,23 +726,23 @@
     .st-zona {
       font-size: 15px;
       color: var(--sc-blue);
-      margin: 16px 0 8px;
+      margin: 18px 0 8px;
       padding-bottom: 4px;
       border-bottom: 2px solid #e2e8f0;
     }
 
     .st-rk-g {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 10px;
     }
 
     .st-card {
       background: #fff;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 10px 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+      box-shadow: 0 2px 5px rgba(0,0,0,.05);
     }
 
     .st-card-h {
@@ -754,7 +754,7 @@
 
     .st-card-h b {
       color: var(--sc-blue);
-      font-size: 13.5px;
+      font-size: 14px;
     }
 
     .st-card-h small {
@@ -782,24 +782,77 @@
       font-weight: bold;
     }
 
+    .st-rk.extra {
+      border-top: 1px dashed #ffa000;
+      margin-top: 4px;
+    }
+
     .st-rk i {
       font-style: normal;
       font-weight: bold;
-      color: #64748b;
+      color: #777;
       width: 20px;
       text-align: center;
     }
 
+    .st-rk img {
+      border-radius: 50%;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
     .st-rk .nm {
       flex: 1;
+      font-weight: 600;
+      font-size: 13px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      min-width: 0;
+      line-height: 1.25;
     }
 
-    .st-rk .val {
-      font-weight: bold;
+    .st-rk .sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: normal;
+    }
+
+    .st-rk b {
+      font-size: 15px;
       color: var(--sc-blue);
+      min-width: 28px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .st-dots {
+      display: inline-flex;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .st-dots i {
+      font-style: normal;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 10.5px;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .st-dots .dG { background: #2e7d32; }
+    .st-dots .dE { background: #ef6c00; }
+    .st-dots .dP { background: #c62828; }
+
+    .st-nota {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin: 6px 2px;
     }
 
     .st-h2h-sel {
@@ -824,38 +877,126 @@
       font-size: 15px;
     }
 
-    .st-cmp {
+    /* H2H Comparador: Cuadrícula de 5 columnas fijas (Alineación perfecta) */
+    .st-cmp-table {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .st-cmp-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      gap: 4px 8px;
+      grid-template-columns: 44px 1fr 140px 1fr 44px;
       align-items: center;
-      font-size: 12.5px;
-      margin-bottom: 8px;
+      gap: 10px;
+      font-size: 13px;
     }
 
-    .st-cmp .lbl {
+    .st-cmp-row .val-a {
+      text-align: right;
+      font-weight: 700;
+      color: var(--sc-blue);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .st-cmp-row .val-b {
+      text-align: left;
+      font-weight: 700;
+      color: var(--score-red);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .st-cmp-row .val-a.winner, .st-cmp-row .val-b.winner {
+      font-weight: 900;
+      font-size: 1.05em;
+    }
+
+    .st-bar-track {
+      height: 9px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .st-bar-track.track-a { direction: rtl; }
+    .st-bar-track.track-b { direction: ltr; }
+
+    .st-bar-fill-a {
+      height: 100%;
+      background: var(--sc-blue);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+
+    .st-bar-fill-b {
+      height: 100%;
+      background: var(--score-red);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+
+    .st-cmp-row .lbl-center {
       text-align: center;
+      font-size: 11.5px;
+      font-weight: 600;
       color: var(--text-muted);
-      font-size: 11px;
       white-space: nowrap;
-      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 4px;
     }
 
-    .st-cmp .va, .st-cmp .vb {
+    .st-podium-row {
+      display: grid;
+      grid-template-columns: 1fr 140px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      margin-bottom: 6px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .st-podium-box {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-weight: bold;
-      min-width: 0;
+      gap: 8px;
     }
 
-    .st-cmp .va { justify-content: flex-end; }
-    .st-cmp .va span, .st-cmp .vb span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .st-bar { height: 7px; border-radius: 4px; background: #e2e8f0; flex: 1; position: relative; overflow: hidden; }
-    .st-bar > span { position: absolute; top: 0; bottom: 0; background: var(--sc-blue); border-radius: 4px; }
-    .st-cmp .va .st-bar > span { right: 0; }
-    .st-cmp .vb .st-bar > span { left: 0; background: #e11d48; }
-    .st-cmp .va .st-bar { direction: rtl; }
+    .st-podium-box.box-a { justify-content: flex-end; }
+    .st-podium-box.box-b { justify-content: flex-start; }
+
+    .st-rank-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .st-rank-pill.leader {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1.5px solid #f59e0b;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+    }
+
+    .st-rank-pill.runner-up {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .st-rank-subtext {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
 
     /* Indicador de carga */
     .loading-box {
@@ -962,6 +1103,17 @@
       .game .address-meta {
         grid-column: 1 / -1;
       }
+      .st-cmp-row {
+        grid-template-columns: 32px 1fr 105px 1fr 32px;
+        gap: 6px;
+        font-size: 12px;
+      }
+      .st-cmp-row .lbl-center { font-size: 10.5px; }
+      .st-podium-row {
+        grid-template-columns: 1fr 105px 1fr;
+        gap: 6px;
+      }
+      .st-rank-pill { font-size: 11.5px; padding: 3px 6px; }
     }
   </style>
 </head>
@@ -1469,19 +1621,14 @@
       // Calcular rachas a partir de forma ("GGG" -> 3 invicto)
       teams.forEach(t => {
         const f = t.forma || '';
-        let u = 0;
-        for (let i = f.length - 1; i >= 0; i--) {
-          if (f[i] === 'G' || f[i] === 'E') u++;
-          else break;
-        }
-        let nw = 0;
-        for (let i = f.length - 1; i >= 0; i--) {
-          if (f[i] === 'P' || f[i] === 'E') nw++;
-          else break;
-        }
+        let winStreak = 0, noWin = 0, unbeaten = 0;
+        for (let i = f.length - 1; i >= 0 && f[i] === 'G'; i--) winStreak++;
+        for (let i = f.length - 1; i >= 0 && f[i] !== 'G'; i--) noWin++;
+        for (let i = f.length - 1; i >= 0 && f[i] !== 'P'; i--) unbeaten++;
         if (teamStats[t.id]) {
-          teamStats[t.id].unbeatenStreak = u;
-          teamStats[t.id].noWinStreak = nw;
+          teamStats[t.id].winStreak = winStreak;
+          teamStats[t.id].unbeatenStreak = unbeaten;
+          teamStats[t.id].noWinStreak = noWin;
         }
       });
 
@@ -1512,26 +1659,30 @@
       const rankings = [
         {
           t: '🔥 Mejor ataque',
-          s: 'más goles a favor',
-          sub: x => x.gf + ' GF en ' + x.pj + ' PJ',
+          s: 'goles a favor',
+          val: x => x.gf,
+          sub: x => x.pj ? (x.gf / x.pj).toFixed(1) + '/partido' : '',
           sort: (a, b) => (b.gf - a.gf) || (b.diff - a.diff) || (b.pts - a.pts)
         },
         {
           t: '🛡️ Mejor defensa',
-          s: 'menos goles encajados',
-          sub: x => x.gc + ' GC en ' + x.pj + ' PJ',
+          s: 'goles en contra',
+          val: x => x.gc,
+          sub: x => x.pj ? (x.gc / x.pj).toFixed(1) + '/partido' : '',
           sort: (a, b) => (a.gc - b.gc) || (b.diff - a.diff) || (b.pts - a.pts)
         },
         {
-          t: '🏠 Mejor en casa',
-          s: 'puntos de local',
-          sub: x => x.homePts + ' pts (' + x.homePj + ' PJ)',
+          t: '🏠 Fuerte en casa',
+          s: 'pts como local',
+          val: x => x.homePts,
+          sub: x => x.homePj + ' PJ casa',
           sort: (a, b) => (b.homePts - a.homePts) || (b.pts - a.pts)
         },
         {
-          t: '✈️ Mejor fuera',
-          s: 'puntos de visitante',
-          sub: x => x.awayPts + ' pts (' + x.awayPj + ' PJ)',
+          t: '✈️ Mejor visitante',
+          s: 'pts fuera',
+          val: x => x.awayPts,
+          sub: x => x.awayPj + ' PJ fuera',
           sort: (a, b) => (b.awayPts - a.awayPts) || (b.pts - a.pts)
         }
       ];
@@ -1541,22 +1692,22 @@
         html += '<div class="st-card"><div class="st-card-h"><b>' + rk.t + '</b><small>' + rk.s + '</small></div>';
         sorted.slice(0, 5).forEach((t, i) => {
           const scClass = t.esSantaCruz ? ' santacruz' : '';
-          html += '<div class="st-rk' + scClass + '" onclick="goToTeamById(' + t.id + ')">' +
+          html += '<div class="st-rk' + scClass + '" onclick="goToTeamById(' + t.id + ')" title="Ver calendario de ' + escapeAttr(t.nombre) + '">' +
             '<i>' + (i + 1) + '</i>' +
             '<img src="' + escapeAttr(t.escudo) + '" width="22" height="22" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
-            '<span class="nm">' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</span>' +
-            '<span class="val">' + rk.sub(t) + '</span>' +
+            '<span class="nm">' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + (rk.sub(t) ? '<br><span class="sub">' + escapeHtml(rk.sub(t)) + '</span>' : '') + '</span>' +
+            '<b>' + rk.val(t) + '</b>' +
           '</div>';
         });
         // Si Santa Cruz no está en top 5, mostrarlo en fila extra
         const scIdx = sorted.findIndex(t => t.esSantaCruz);
         if (scIdx >= 5) {
           const sc = sorted[scIdx];
-          html += '<div class="st-rk santacruz" style="border-top:1px dashed #ffa000; margin-top:4px;" onclick="goToTeamById(' + sc.id + ')">' +
+          html += '<div class="st-rk santacruz extra" onclick="goToTeamById(' + sc.id + ')" title="Ver calendario de ' + escapeAttr(sc.nombre) + '">' +
             '<i>' + (scIdx + 1) + '</i>' +
             '<img src="' + escapeAttr(sc.escudo) + '" width="22" height="22" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
-            '<span class="nm">' + escapeHtml(sc.nombre) + ' ⭐</span>' +
-            '<span class="val">' + rk.sub(sc) + '</span>' +
+            '<span class="nm">' + escapeHtml(sc.nombre) + ' ⭐' + (rk.sub(sc) ? '<br><span class="sub">' + escapeHtml(rk.sub(sc)) + '</span>' : '') + '</span>' +
+            '<b>' + rk.val(sc) + '</b>' +
           '</div>';
         }
         html += '</div>';
@@ -1564,8 +1715,41 @@
 
       html += '</div>';
 
+      // Rachas y forma (idéntico a Somos Valle)
+      html += '<h2 class="st-zona">Rachas y forma</h2><div class="st-rk-g">';
+      const streakCards = [
+        { t: '📈 Victorias seguidas', f: x => x.winStreak, lbl: v => v + (v === 1 ? ' victoria seguida' : ' victorias seguidas') },
+        { t: '🧱 Jornadas invicto', f: x => x.unbeatenStreak, lbl: v => v + (v === 1 ? ' jornada sin perder' : ' sin perder') },
+        { t: '📉 Jornadas sin ganar', f: x => x.noWinStreak, lbl: v => v + (v === 1 ? ' jornada sin ganar' : ' sin ganar') }
+      ];
+      streakCards.forEach(sc => {
+        const sorted = S.teamList.filter(x => sc.f(x) > 0).sort((a, b) => sc.f(b) - sc.f(a) || b.pts - a.pts);
+        html += '<div class="st-card"><div class="st-card-h"><b>' + sc.t + '</b><small>últimos 5</small></div>';
+        if (!sorted.length) html += '<div class="st-nota">Sin rachas todavía.</div>';
+        sorted.slice(0, 5).forEach((x, i) => {
+          html += '<div class="st-rk' + (x.esSantaCruz ? ' santacruz' : '') + '" onclick="goToTeamById(' + x.id + ')">' +
+            '<i>' + (i + 1) + '</i>' +
+            '<img src="' + escapeAttr(x.escudo) + '" width="22" height="22" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+            '<span class="nm">' + escapeHtml(x.nombre) + (x.esSantaCruz ? ' ⭐' : '') + '<br><span class="sub">' + sc.lbl(sc.f(x)) + '</span></span>' +
+            formaHtml(x.forma) +
+          '</div>';
+        });
+        const scIdx = sorted.findIndex(x => x.esSantaCruz);
+        if (scIdx >= 5) {
+          const scTeam = sorted[scIdx];
+          html += '<div class="st-rk santacruz extra" onclick="goToTeamById(' + scTeam.id + ')">' +
+            '<i>' + (scIdx + 1) + '</i>' +
+            '<img src="' + escapeAttr(scTeam.escudo) + '" width="22" height="22" class="img-circle" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+            '<span class="nm">' + escapeHtml(scTeam.nombre) + ' ⭐<br><span class="sub">' + sc.lbl(sc.f(scTeam)) + '</span></span>' +
+            formaHtml(scTeam.forma) +
+          '</div>';
+        }
+        html += '</div>';
+      });
+      html += '</div><p class="st-nota">Forma: últimos 5 partidos, del más antiguo al más reciente.</p>';
+
       // Comparador Cara a Cara (H2H)
-      html += '<h2 class="st-zona">Comparador Cara a Cara (H2H)</h2>';
+      html += '<h2 class="st-zona">Cara a cara</h2><p class="st-nota">Elige dos equipos para compararlos y ver sus enfrentamientos de esta temporada.</p>';
       html += '<div class="st-card">';
 
       const optsA = S.teamList.map(t => '<option value="' + t.id + '"' + (t.id === STATE.h2hA ? ' selected' : '') + '>' + escapeHtml(t.nombre) + (t.esSantaCruz ? ' ⭐' : '') + '</option>').join('');
@@ -1598,34 +1782,82 @@
       document.getElementById('statsContainer').innerHTML = html;
     }
 
+    function formaHtml(forma) {
+      if (!forma) return '';
+      return '<span class="st-dots">' + forma.split('').map(r => '<i class="d' + r + '">' + r + '</i>').join('') + '</span>';
+    }
+
     function renderH2HComparison(S, idA, idB) {
       const A = S.teamList.find(t => t.id === idA);
       const B = S.teamList.find(t => t.id === idB);
       if (!A || !B) return '';
 
-      function cmpRow(label, vA, vB, isMaxBetter) {
-        const numA = typeof vA === 'number' ? vA : parseFloat(vA) || 0;
-        const numB = typeof vB === 'number' ? vB : parseFloat(vB) || 0;
-        const max = Math.max(numA, numB, 1);
-        const pctA = Math.round((numA / max) * 100);
-        const pctB = Math.round((numB / max) * 100);
-
-        return '<div class="st-cmp">' +
-          '<div class="va"><span>' + vA + '</span><div class="st-bar"><span style="width:' + pctA + '%"></span></div></div>' +
-          '<div class="lbl">' + label + '</div>' +
-          '<div class="vb"><div class="st-bar"><span style="width:' + pctB + '%"></span></div><span>' + vB + '</span></div>' +
+      function row5Col(valA, pctA, label, pctB, valB, isWinA, isWinB) {
+        const clsA = isWinA ? 'val-a winner' : 'val-a';
+        const clsB = isWinB ? 'val-b winner' : 'val-b';
+        return '<div class="st-cmp-row">' +
+          '<div class="' + clsA + '">' + valA + '</div>' +
+          '<div class="st-bar-track track-a"><div class="st-bar-fill-a" style="width:' + pctA + '%"></div></div>' +
+          '<div class="lbl-center" title="' + label + '">' + label + '</div>' +
+          '<div class="st-bar-track track-b"><div class="st-bar-fill-b" style="width:' + pctB + '%"></div></div>' +
+          '<div class="' + clsB + '">' + valB + '</div>' +
         '</div>';
       }
 
-      let html = '';
-      html += cmpRow('Posición', A.posicion + 'º', B.posicion + 'º', false);
-      html += cmpRow('Puntos', A.pts, B.pts, true);
-      html += cmpRow('Partidos Jugados', A.pj, B.pj, true);
-      html += cmpRow('Goles a Favor', A.gf, B.gf, true);
-      html += cmpRow('Goles en Contra', A.gc, B.gc, false);
-      html += cmpRow('Diferencia', (A.diff > 0 ? '+' + A.diff : A.diff), (B.diff > 0 ? '+' + B.diff : B.diff), true);
-      html += cmpRow('Puntos en Casa', A.homePts, B.homePts, true);
-      html += cmpRow('Puntos Fuera', A.awayPts, B.awayPts, true);
+      let html = '<div class="st-cmp-table">';
+
+      // 1. Podio de Posición (Sin barra engañosa, estilo Opción A recomendada)
+      const leaderA = A.posicion < B.posicion;
+      const leaderB = B.posicion < A.posicion;
+      const pillClassA = leaderA ? 'st-rank-pill leader' : 'st-rank-pill runner-up';
+      const pillClassB = leaderB ? 'st-rank-pill leader' : 'st-rank-pill runner-up';
+
+      html += '<div class="st-podium-row">' +
+        '<div class="st-podium-box box-a">' +
+          '<div class="' + pillClassA + '">' + (leaderA ? '👑 ' : '') + A.posicion + 'º' + '</div>' +
+        '</div>' +
+        '<div class="lbl-center"><span class="st-rank-subtext">Posición</span></div>' +
+        '<div class="st-podium-box box-b">' +
+          '<div class="' + pillClassB + '">' + (leaderB ? '👑 ' : '') + B.posicion + 'º' + '</div>' +
+        '</div>' +
+      '</div>';
+
+      // 2. Métricas en 5 columnas fijas
+      // Puntos
+      const maxPts = Math.max(A.pts, B.pts, 1);
+      html += row5Col(A.pts, Math.round(A.pts*100/maxPts), 'Puntos', Math.round(B.pts*100/maxPts), B.pts, A.pts > B.pts, B.pts > A.pts);
+
+      // Partidos Jugados
+      const maxPj = Math.max(A.pj, B.pj, 1);
+      html += row5Col(A.pj, Math.round(A.pj*100/maxPj), 'Partidos Jugados', Math.round(B.pj*100/maxPj), B.pj, false, false);
+
+      // Goles a Favor
+      const maxGf = Math.max(A.gf, B.gf, 1);
+      html += row5Col(A.gf, Math.round(A.gf*100/maxGf), 'Goles a Favor', Math.round(B.gf*100/maxGf), B.gf, A.gf > B.gf, B.gf > A.gf);
+
+      // Goles en Contra -> Solidez Defensiva (menos goles = más barra)
+      const minGc = Math.min(A.gc, B.gc);
+      const pctGcA = A.gc === 0 ? 100 : Math.round((minGc / A.gc) * 100);
+      const pctGcB = B.gc === 0 ? 100 : Math.round((minGc / B.gc) * 100);
+      html += row5Col(A.gc, pctGcA, 'Solidez Defensiva', pctGcB, B.gc, A.gc < B.gc, B.gc < A.gc);
+
+      // Diferencia
+      const maxDiff = Math.max(Math.abs(A.diff), Math.abs(B.diff), 1);
+      const diffStrA = A.diff > 0 ? '+' + A.diff : '' + A.diff;
+      const diffStrB = B.diff > 0 ? '+' + B.diff : '' + B.diff;
+      const pctDiffA = Math.max(0, Math.round((A.diff / maxDiff) * 100));
+      const pctDiffB = Math.max(0, Math.round((B.diff / maxDiff) * 100));
+      html += row5Col(diffStrA, pctDiffA, 'Diferencia', pctDiffB, diffStrB, A.diff > B.diff, B.diff > A.diff);
+
+      // Puntos Casa
+      const maxHome = Math.max(A.homePts, B.homePts, 1);
+      html += row5Col(A.homePts, Math.round(A.homePts*100/maxHome), 'Puntos en Casa', Math.round(B.homePts*100/maxHome), B.homePts, A.homePts > B.homePts, B.homePts > A.homePts);
+
+      // Puntos Fuera
+      const maxAway = Math.max(A.awayPts, B.awayPts, 1);
+      html += row5Col(A.awayPts, Math.round(A.awayPts*100/maxAway), 'Puntos Fuera', Math.round(B.awayPts*100/maxAway), B.awayPts, A.awayPts > B.awayPts, B.awayPts > A.awayPts);
+
+      html += '</div>';
 
       // Enfrentamientos directos
       const direct = S.allMatches.filter(m => 

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Laboratorio H2H · 3 Alternativas Visuales</title>
+  <link rel="icon" type="image/webp" href="https://www.futbuteo.com/escudos/80/gal-19230216.webp">
+  <style>
+    :root {
+      --sc-blue: #0b2545;
+      --sc-blue-dark: #07192f;
+      --sc-blue-light: #e8f0fe;
+      --sc-gold: #ffb703;
+      --sc-gold-dark: #fb8500;
+      --sc-red: #e11d48;
+      --bg-card: #ffffff;
+      --bg-page: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-page);
+      color: var(--text);
+      padding: 16px;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Cabecera del Lab */
+    .lab-header {
+      background: var(--sc-blue-dark);
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(11, 37, 69, 0.2);
+    }
+    .lab-header h1 {
+      font-size: 1.4em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lab-header p {
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+
+    /* Selector de equipos */
+    .selector-bar {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .team-select-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .team-select-group.team-b {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+    .team-crest {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    select.team-dropdown {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--sc-blue);
+      background: #ffffff;
+    }
+    .vs-pill {
+      font-weight: 900;
+      color: #ffffff;
+      background: var(--sc-red);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    /* Pestañas de alternativas */
+    .option-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 12px;
+      background: #e2e8f0;
+      color: #475569;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .tab-btn.active {
+      background: var(--sc-blue);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(11, 37, 69, 0.25);
+    }
+
+    /* Tarjetas de Opción */
+    .option-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+    .option-card.highlight {
+      border: 2px solid #3b82f6;
+    }
+    .option-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .option-header .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .badge-rec { background: #dbeafe; color: #1e40af; }
+    .badge-alt { background: #f1f5f9; color: #475569; }
+    .option-header h2 {
+      font-size: 1.15em;
+      color: var(--sc-blue);
+      margin-bottom: 4px;
+    }
+    .option-header p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* Cuadrícula de 5 columnas fija (ALINEACIÓN PERFECTA) */
+    .cmp-grid-5 {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cmp-row-5 {
+      display: grid;
+      grid-template-columns: 44px 1fr 140px 1fr 44px;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    /* Valores extremos */
+    .val-a {
+      text-align: right;
+      font-weight: 700;
+      color: var(--sc-blue);
+      font-variant-numeric: tabular-nums;
+    }
+    .val-b {
+      text-align: left;
+      font-weight: 700;
+      color: var(--sc-red);
+      font-variant-numeric: tabular-nums;
+    }
+    .val-a.winner, .val-b.winner {
+      font-weight: 900;
+      font-size: 1.05em;
+    }
+
+    /* Barras */
+    .bar-track {
+      height: 9px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .bar-track.track-a { direction: rtl; }
+    .bar-track.track-b { direction: ltr; }
+
+    .bar-fill-a {
+      height: 100%;
+      background: var(--sc-blue);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+    .bar-fill-b {
+      height: 100%;
+      background: var(--sc-red);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+
+    /* Etiqueta central */
+    .lbl-center {
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 4px;
+    }
+
+    /* ============================================================== */
+    /* ESTILOS ESPECÍFICOS OPCIÓN A: Podio de Posición + Badges      */
+    /* ============================================================== */
+    .podium-row {
+      display: grid;
+      grid-template-columns: 1fr 140px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      margin-bottom: 6px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .podium-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .podium-box.box-a { justify-content: flex-end; }
+    .podium-box.box-b { justify-content: flex-start; }
+
+    .rank-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 13.5px;
+    }
+    .rank-pill.leader {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1.5px solid #f59e0b;
+      box-shadow: 0 2px 5px rgba(245, 158, 11, 0.2);
+    }
+    .rank-pill.runner-up {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1.5px solid #cbd5e1;
+    }
+    .rank-pill.gold {
+      background: linear-gradient(135deg, #fef08a, #facc15);
+      color: #713f12;
+      border: 1px solid #eab308;
+    }
+    .rank-subtext {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    /* ============================================================== */
+    /* ESTILOS ESPECÍFICOS OPCIÓN B: Hero Card tipo Sofascore         */
+    /* ============================================================== */
+    .hero-h2h {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, #0b2545 0%, #1e3a5f 100%);
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .hero-team {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hero-team.team-a { align-items: flex-end; text-align: right; }
+    .hero-team.team-b { align-items: flex-start; text-align: left; }
+    .hero-crest {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 2px;
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+    .hero-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .hero-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+      flex-wrap: wrap;
+    }
+    .hero-tag {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .hero-tag.tag-gold {
+      background: #fbbf24;
+      color: #78350f;
+      border-color: #f59e0b;
+    }
+    .hero-forma {
+      display: flex;
+      gap: 3px;
+      margin-top: 2px;
+    }
+    .form-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #ffffff;
+    }
+    .form-dot.win { background: #22c55e; }
+    .form-dot.draw { background: #eab308; }
+    .form-dot.loss { background: #ef4444; }
+
+    /* ============================================================== */
+    /* Responsive móvil                                               */
+    /* ============================================================== */
+    @media (max-width: 600px) {
+      body { padding: 8px; }
+      .lab-header { padding: 14px; }
+      .option-card { padding: 12px; }
+      .cmp-row-5 {
+        grid-template-columns: 32px 1fr 105px 1fr 32px;
+        gap: 6px;
+        font-size: 12px;
+      }
+      .lbl-center { font-size: 10.5px; }
+      .hero-h2h { padding: 12px 8px; gap: 8px; }
+      .hero-crest { width: 38px; height: 38px; }
+      .hero-name { font-size: 12.5px; }
+      .rank-pill { font-size: 12px; padding: 4px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Cabecera -->
+    <div class="lab-header">
+      <h1>🔬 Laboratorio de Comparador Cara a Cara (H2H)</h1>
+      <p>Prueba interactiva con datos reales de la liga. Analiza cómo resuelven la alineación fija y el problema de «1º vs 2º» y «Goles en Contra».</p>
+    </div>
+
+    <!-- Barra de selección de equipos -->
+    <div class="selector-bar">
+      <div class="team-select-group team-a">
+        <img id="crestA" class="team-crest" src="" alt="">
+        <select id="selectA" class="team-dropdown" onchange="onTeamChanged()"></select>
+      </div>
+      <div class="vs-pill">VS</div>
+      <div class="team-select-group team-b">
+        <img id="crestB" class="team-crest" src="" alt="">
+        <select id="selectB" class="team-dropdown" onchange="onTeamChanged()"></select>
+      </div>
+    </div>
+
+    <!-- Pestañas para alternar o ver todas -->
+    <div class="option-tabs">
+      <button class="tab-btn active" onclick="showOption('all', this)">👀 Ver las 3 Juntas</button>
+      <button class="tab-btn" onclick="showOption('opt-a', this)">🌟 Opción A (Badges + Solidez)</button>
+      <button class="tab-btn" onclick="showOption('opt-b', this)">🥈 Opción B (Hero Card)</button>
+      <button class="tab-btn" onclick="showOption('opt-c', this)">🥉 Opción C (Barra Invertida)</button>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- OPCIÓN A                                                       -->
+    <!-- ============================================================== -->
+    <div id="card-opt-a" class="option-card highlight">
+      <div class="option-header">
+        <span class="badge badge-rec">⭐ Opción A (Recomendada)</span>
+        <h2>Badges de Podio para Posición + Solidez Defensiva Invertida</h2>
+        <p>• <b>Posición:</b> Se quita la barra (la posición no es una barra de progreso) y se muestra como insignia de podio destacando al líder.<br>
+           • <b>Goles en Contra:</b> La barra representa <i>Solidez Defensiva</i> (el que menos goles encaja tiene la barra completa).<br>
+           • <b>5 Columnas fijas:</b> Todas las barras miden exactamente los mismos píxeles y el texto central está 100% alineado verticalmente.</p>
+      </div>
+      <div id="content-opt-a"></div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- OPCIÓN B                                                       -->
+    <!-- ============================================================== -->
+    <div id="card-opt-b" class="option-card">
+      <div class="option-header">
+        <span class="badge badge-alt">Opción B</span>
+        <h2>Hero Card de Clasificación + Barras puras de juego</h2>
+        <p>• <b>Cabecera estilo videojuego/Sofascore:</b> Muestra Posición, Puntos totales y Racha de forma de un vistazo arriba.<br>
+           • <b>Abajo solo juego:</b> Las barras comparan únicamente goles, solidez y rendimiento casa/fuera.</p>
+      </div>
+      <div id="content-opt-b"></div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- OPCIÓN C                                                       -->
+    <!-- ============================================================== -->
+    <div id="card-opt-c" class="option-card">
+      <div class="option-header">
+        <span class="badge badge-alt">Opción C</span>
+        <h2>Barra Invertida de Liga (Escala 1 a 14)</h2>
+        <p>• <b>Barra en todo:</b> El 1º clasificado tiene 100% de barra (14/14), el 2º tiene 93% (13/14) y el 14º tiene 7% (1/14).<br>
+           • <b>Menos es más:</b> Convierte matemáticamente cualquier métrica inversa para que más barra siempre signifique mejor.</p>
+      </div>
+      <div id="content-opt-c"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Datos reales embebidos (por si se abre vía file:/// sin CORS)
+    let DATA = null;
+
+    // Intentar cargar data.json relativo
+    fetch('./data.json')
+      .then(res => res.json())
+      .then(json => { DATA = json; initLab(); })
+      .catch(() => {
+        // Fallback a datos precargados si no hay server
+        console.warn('Cargando fallback...');
+        DATA = getEmbeddedFallbackData();
+        initLab();
+      });
+
+    function initLab() {
+      const selectA = document.getElementById('selectA');
+      const selectB = document.getElementById('selectB');
+
+      const teams = DATA.equipos || [];
+      const opts = teams.map(t => 
+        '<option value="' + t.id + '">' + t.nombre + (t.esSantaCruz ? ' ⭐' : '') + '</option>'
+      ).join('');
+
+      selectA.innerHTML = opts;
+      selectB.innerHTML = opts;
+
+      // Por defecto: Santa Cruz C.F. vs Ural Español C.F. (1º y 2º)
+      const sc = teams.find(t => t.esSantaCruz) || teams[0];
+      const ural = teams.find(t => t.nombre.includes('Ural')) || teams[1] || teams[0];
+
+      selectA.value = sc.id;
+      selectB.value = ural.id;
+
+      renderAll();
+    }
+
+    function onTeamChanged() {
+      renderAll();
+    }
+
+    function renderAll() {
+      const idA = Number(document.getElementById('selectA').value);
+      const idB = Number(document.getElementById('selectB').value);
+
+      const teamA = DATA.equipos.find(t => t.id === idA);
+      const teamB = DATA.equipos.find(t => t.id === idB);
+
+      if (!teamA || !teamB) return;
+
+      document.getElementById('crestA').src = teamA.escudo;
+      document.getElementById('crestB').src = teamB.escudo;
+
+      // Renderizar las 3 alternativas
+      renderOptionA(teamA, teamB);
+      renderOptionB(teamA, teamB);
+      renderOptionC(teamA, teamB);
+    }
+
+    function showOption(opt, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cardA = document.getElementById('card-opt-a');
+      const cardB = document.getElementById('card-opt-b');
+      const cardC = document.getElementById('card-opt-c');
+
+      if (opt === 'all') {
+        cardA.style.display = 'block';
+        cardB.style.display = 'block';
+        cardC.style.display = 'block';
+      } else if (opt === 'opt-a') {
+        cardA.style.display = 'block';
+        cardB.style.display = 'none';
+        cardC.style.display = 'none';
+      } else if (opt === 'opt-b') {
+        cardA.style.display = 'none';
+        cardB.style.display = 'block';
+        cardC.style.display = 'none';
+      } else if (opt === 'opt-c') {
+        cardA.style.display = 'none';
+        cardB.style.display = 'none';
+        cardC.style.display = 'block';
+      }
+    }
+
+    /* Helper: fila estándar de 5 columnas fijas */
+    function make5ColRow(valA, pctA, label, pctB, valB, isWinA, isWinB) {
+      const clsA = isWinA ? 'val-a winner' : 'val-a';
+      const clsB = isWinB ? 'val-b winner' : 'val-b';
+
+      return '<div class="cmp-row-5">' +
+        '<div class="' + clsA + '">' + valA + '</div>' +
+        '<div class="bar-track track-a"><div class="bar-fill-a" style="width:' + pctA + '%"></div></div>' +
+        '<div class="lbl-center" title="' + label + '">' + label + '</div>' +
+        '<div class="bar-track track-b"><div class="bar-fill-b" style="width:' + pctB + '%"></div></div>' +
+        '<div class="' + clsB + '">' + valB + '</div>' +
+      '</div>';
+    }
+
+    /* ============================================================== */
+    /* OPCIÓN A                                                       */
+    /* ============================================================== */
+    function renderOptionA(A, B) {
+      let html = '<div class="cmp-grid-5">';
+
+      // 1. FILA DE PODIO ESPECIAL PARA POSICIÓN (Sin barra engañosa)
+      const leaderA = A.posicion < B.posicion;
+      const leaderB = B.posicion < A.posicion;
+      const pillClassA = leaderA ? 'rank-pill leader' : 'rank-pill runner-up';
+      const pillClassB = leaderB ? 'rank-pill leader' : 'rank-pill runner-up';
+
+      html += '<div class="podium-row">' +
+        '<div class="podium-box box-a">' +
+          '<div class="' + pillClassA + '">' + (leaderA ? '👑 ' : '') + A.posicion + 'º' + '</div>' +
+        '</div>' +
+        '<div class="lbl-center"><span class="rank-subtext">Posición en Liga</span></div>' +
+        '<div class="podium-box box-b">' +
+          '<div class="' + pillClassB + '">' + (leaderB ? '👑 ' : '') + B.posicion + 'º' + '</div>' +
+        '</div>' +
+      '</div>';
+
+      // 2. FILAS CON 5 COLUMNAS FIJAS
+      // Puntos
+      const maxPts = Math.max(A.puntos, B.puntos, 1);
+      html += make5ColRow(A.puntos, Math.round(A.puntos*100/maxPts), 'Puntos', Math.round(B.puntos*100/maxPts), B.puntos, A.puntos > B.puntos, B.puntos > A.puntos);
+
+      // Partidos Jugados
+      const maxPj = Math.max(A.pj, B.pj, 1);
+      html += make5ColRow(A.pj, Math.round(A.pj*100/maxPj), 'Partidos Jugados', Math.round(B.pj*100/maxPj), B.pj, false, false);
+
+      // Goles a Favor
+      const maxGf = Math.max(A.gf, B.gf, 1);
+      html += make5ColRow(A.gf, Math.round(A.gf*100/maxGf), 'Goles a Favor', Math.round(B.gf*100/maxGf), B.gf, A.gf > B.gf, B.gf > A.gf);
+
+      // Goles en Contra -> SOLIDEZ DEFENSIVA INVERTIDA (Menos goles = más barra)
+      // Si ambos tienen 1 GC, ambos 100%. Si uno tiene 1 y otro 4: A=100%, B=(1/4)=25%
+      const minGc = Math.min(A.gc, B.gc);
+      const pctGcA = A.gc === 0 ? 100 : Math.round((minGc / A.gc) * 100);
+      const pctGcB = B.gc === 0 ? 100 : Math.round((minGc / B.gc) * 100);
+      html += make5ColRow(A.gc, pctGcA, 'Solidez Defensiva', pctGcB, B.gc, A.gc < B.gc, B.gc < A.gc);
+
+      // Diferencia de Goles
+      const maxDiff = Math.max(Math.abs(A.diff), Math.abs(B.diff), 1);
+      const diffStrA = A.diff > 0 ? '+' + A.diff : '' + A.diff;
+      const diffStrB = B.diff > 0 ? '+' + B.diff : '' + B.diff;
+      const pctDiffA = Math.max(0, Math.round((A.diff / maxDiff) * 100));
+      const pctDiffB = Math.max(0, Math.round((B.diff / maxDiff) * 100));
+      html += make5ColRow(diffStrA, pctDiffA, 'Diferencia', pctDiffB, diffStrB, A.diff > B.diff, B.diff > A.diff);
+
+      // Puntos en Casa
+      const maxHome = Math.max(A.homePts || 6, B.homePts || 3, 1);
+      const homeA = A.homePts !== undefined ? A.homePts : 6;
+      const homeB = B.homePts !== undefined ? B.homePts : 3;
+      html += make5ColRow(homeA, Math.round(homeA*100/maxHome), 'Puntos en Casa', Math.round(homeB*100/maxHome), homeB, homeA > homeB, homeB > homeA);
+
+      // Puntos Fuera
+      const maxAway = Math.max(A.awayPts || 3, B.awayPts || 6, 1);
+      const awayA = A.awayPts !== undefined ? A.awayPts : 3;
+      const awayB = B.awayPts !== undefined ? B.awayPts : 6;
+      html += make5ColRow(awayA, Math.round(awayA*100/maxAway), 'Puntos Fuera', Math.round(awayB*100/maxAway), awayB, awayA > awayB, awayB > awayA);
+
+      html += '</div>';
+      document.getElementById('content-opt-a').innerHTML = html;
+    }
+
+    /* ============================================================== */
+    /* OPCIÓN B                                                       */
+    /* ============================================================== */
+    function renderOptionB(A, B) {
+      function renderFormDots(f) {
+        if (!f) return '';
+        return f.split('').map(c => {
+          const cls = c === 'G' ? 'win' : (c === 'E' ? 'draw' : 'loss');
+          return '<span class="form-dot ' + cls + '">' + c + '</span>';
+        }).join('');
+      }
+
+      let html = '';
+
+      // 1. HERO CARD ESTILO SOFASCORE
+      html += '<div class="hero-h2h">' +
+        '<div class="hero-team team-a">' +
+          '<img src="' + A.escudo + '" class="hero-crest" alt="">' +
+          '<div class="hero-name">' + A.nombre + '</div>' +
+          '<div class="hero-badges">' +
+            '<span class="hero-tag ' + (A.posicion === 1 ? 'tag-gold' : '') + '">' + A.posicion + 'º Clasificado</span>' +
+            '<span class="hero-tag">' + A.puntos + ' pts</span>' +
+          '</div>' +
+          '<div class="hero-forma">' + renderFormDots(A.forma) + '</div>' +
+        '</div>' +
+        '<div class="vs-pill">VS</div>' +
+        '<div class="hero-team team-b">' +
+          '<img src="' + B.escudo + '" class="hero-crest" alt="">' +
+          '<div class="hero-name">' + B.nombre + '</div>' +
+          '<div class="hero-badges">' +
+            '<span class="hero-tag ' + (B.posicion === 1 ? 'tag-gold' : '') + '">' + B.posicion + 'º Clasificado</span>' +
+            '<span class="hero-tag">' + B.puntos + ' pts</span>' +
+          '</div>' +
+          '<div class="hero-forma">' + renderFormDots(B.forma) + '</div>' +
+        '</div>' +
+      '</div>';
+
+      // 2. SOLO MÉTRICAS DE JUEGO (Con 5 columnas perfectas)
+      html += '<div class="cmp-grid-5">';
+
+      const maxGf = Math.max(A.gf, B.gf, 1);
+      html += make5ColRow(A.gf, Math.round(A.gf*100/maxGf), 'Goles a Favor', Math.round(B.gf*100/maxGf), B.gf, A.gf > B.gf, B.gf > A.gf);
+
+      const minGc = Math.min(A.gc, B.gc);
+      const pctGcA = A.gc === 0 ? 100 : Math.round((minGc / A.gc) * 100);
+      const pctGcB = B.gc === 0 ? 100 : Math.round((minGc / B.gc) * 100);
+      html += make5ColRow(A.gc, pctGcA, 'Goles Encajados', pctGcB, B.gc, A.gc < B.gc, B.gc < A.gc);
+
+      const maxDiff = Math.max(Math.abs(A.diff), Math.abs(B.diff), 1);
+      html += make5ColRow((A.diff>0?'+':'')+A.diff, Math.max(0, Math.round(A.diff*100/maxDiff)), 'Diferencia Goles', Math.max(0, Math.round(B.diff*100/maxDiff)), (B.diff>0?'+':'')+B.diff, A.diff > B.diff, B.diff > A.diff);
+
+      const maxHome = Math.max(A.homePts || 6, B.homePts || 3, 1);
+      const homeA = A.homePts !== undefined ? A.homePts : 6;
+      const homeB = B.homePts !== undefined ? B.homePts : 3;
+      html += make5ColRow(homeA, Math.round(homeA*100/maxHome), 'Puntos en Casa', Math.round(homeB*100/maxHome), homeB, homeA > homeB, homeB > homeA);
+
+      const maxAway = Math.max(A.awayPts || 3, B.awayPts || 6, 1);
+      const awayA = A.awayPts !== undefined ? A.awayPts : 3;
+      const awayB = B.awayPts !== undefined ? B.awayPts : 6;
+      html += make5ColRow(awayA, Math.round(awayA*100/maxAway), 'Puntos Fuera', Math.round(awayB*100/maxAway), awayB, awayA > awayB, awayB > awayA);
+
+      html += '</div>';
+      document.getElementById('content-opt-b').innerHTML = html;
+    }
+
+    /* ============================================================== */
+    /* OPCIÓN C                                                       */
+    /* ============================================================== */
+    function renderOptionC(A, B) {
+      let html = '<div class="cmp-grid-5">';
+
+      // En escala de 14 equipos: 1º=100%, 2º=93%, 14º=7%
+      const totalTeams = 14;
+      const pctPosA = Math.round(((totalTeams - A.posicion + 1) / totalTeams) * 100);
+      const pctPosB = Math.round(((totalTeams - B.posicion + 1) / totalTeams) * 100);
+      html += make5ColRow(A.posicion + 'º', pctPosA, 'Posición (14 eq.)', pctPosB, B.posicion + 'º', A.posicion < B.posicion, B.posicion < A.posicion);
+
+      const maxPts = Math.max(A.puntos, B.puntos, 1);
+      html += make5ColRow(A.puntos, Math.round(A.puntos*100/maxPts), 'Puntos', Math.round(B.puntos*100/maxPts), B.puntos, A.puntos > B.puntos, B.puntos > A.puntos);
+
+      const maxGf = Math.max(A.gf, B.gf, 1);
+      html += make5ColRow(A.gf, Math.round(A.gf*100/maxGf), 'Goles a Favor', Math.round(B.gf*100/maxGf), B.gf, A.gf > B.gf, B.gf > A.gf);
+
+      // GC invertido respecto a 10 goles max
+      const maxLeagueGc = 10;
+      const pctGcA = Math.max(5, Math.round(((maxLeagueGc - A.gc) / maxLeagueGc) * 100));
+      const pctGcB = Math.max(5, Math.round(((maxLeagueGc - B.gc) / maxLeagueGc) * 100));
+      html += make5ColRow(A.gc, pctGcA, 'Goles en Contra', pctGcB, B.gc, A.gc < B.gc, B.gc < A.gc);
+
+      const maxDiff = Math.max(Math.abs(A.diff), Math.abs(B.diff), 1);
+      html += make5ColRow((A.diff>0?'+':'')+A.diff, Math.max(0, Math.round(A.diff*100/maxDiff)), 'Diferencia', Math.max(0, Math.round(B.diff*100/maxDiff)), (B.diff>0?'+':'')+B.diff, A.diff > B.diff, B.diff > A.diff);
+
+      const maxHome = Math.max(A.homePts || 6, B.homePts || 3, 1);
+      const homeA = A.homePts !== undefined ? A.homePts : 6;
+      const homeB = B.homePts !== undefined ? B.homePts : 3;
+      html += make5ColRow(homeA, Math.round(homeA*100/maxHome), 'Puntos en Casa', Math.round(homeB*100/maxHome), homeB, homeA > homeB, homeB > homeA);
+
+      const maxAway = Math.max(A.awayPts || 3, B.awayPts || 6, 1);
+      const awayA = A.awayPts !== undefined ? A.awayPts : 3;
+      const awayB = B.awayPts !== undefined ? B.awayPts : 6;
+      html += make5ColRow(awayA, Math.round(awayA*100/maxAway), 'Puntos Fuera', Math.round(awayB*100/maxAway), awayB, awayA > awayB, awayB > awayA);
+
+      html += '</div>';
+      document.getElementById('content-opt-c').innerHTML = html;
+    }
+
+    function getEmbeddedFallbackData() {
+      return {
+        equipos: [
+          { id: 19230216, nombre: "Santa Cruz C.F.", escudo: "https://www.futbuteo.com/escudos/80/gal-19230216.webp", esSantaCruz: true, posicion: 2, puntos: 9, pj: 3, gf: 10, gc: 1, diff: 9, forma: "GGG", homePts: 6, awayPts: 3 },
+          { id: 11292341, nombre: "Ural Español C.F.", escudo: "https://www.futbuteo.com/escudos/80/gal-11292341.webp", esSantaCruz: false, posicion: 1, puntos: 9, pj: 3, gf: 11, gc: 1, diff: 10, forma: "GGG", homePts: 3, awayPts: 6 },
+          { id: 3509455, nombre: "Atl. Coruña Montañeros C.F.", escudo: "https://www.futbuteo.com/escudos/80/gal-3509455.webp", esSantaCruz: false, posicion: 3, puntos: 9, pj: 3, gf: 8, gc: 1, diff: 7, forma: "GGG", homePts: 6, awayPts: 3 },
+          { id: 2064, nombre: "Santa Maria del Mar", escudo: "https://www.futbuteo.com/escudos/80/gal-2064.webp", esSantaCruz: false, posicion: 4, puntos: 9, pj: 3, gf: 6, gc: 1, diff: 5, forma: "GGG", homePts: 3, awayPts: 6 },
+          { id: 540, nombre: "Olimpico C.F.", escudo: "https://www.futbuteo.com/escudos/80/gal-540.webp", esSantaCruz: false, posicion: 6, puntos: 4, pj: 3, gf: 5, gc: 3, diff: 2, forma: "EPG", homePts: 0, awayPts: 4 },
+          { id: 362657, nombre: "Sada C.F.", escudo: "https://www.futbuteo.com/escudos/80/gal-362657.webp", esSantaCruz: false, posicion: 7, puntos: 3, pj: 3, gf: 4, gc: 8, diff: -4, forma: "PPG", homePts: 3, awayPts: 0 }
+        ]
+      };
+    }
+  </script>
+</body>
+</html>
