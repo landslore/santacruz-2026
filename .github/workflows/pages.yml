@@ -1,61 +1,32 @@
-name: Actualizar datos de Futbuteo y Desplegar GitHub Pages
+name: Update Futbuteo Data Snapshot for GitHub Pages
 
 on:
-  schedule:
-    # Ejecución automática cada 6 horas
-    - cron: '15 */6 * * *'
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'docs/**'
-      - 'scripts/**'
+  schedule:
+    # Actualiza el snapshot estático (docs/data.json) cada 6 horas automáticamente
+    - cron: "0 */6 * * *"
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
 
 jobs:
-  scrape-and-update:
+  update-snapshot:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout del repositorio
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
 
-      - name: Ejecutar scraper de Futbuteo
+      - name: Actualizar datos de Futbuteo
         run: node scripts/update-data.mjs
 
-      - name: Commit y Push de datos actualizados
+      - name: Commit y Push si hay cambios
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/data.json
-          if git diff --staged --quiet; then
-            echo "Sin cambios en los datos de la liga."
-          else
-            git commit -m "chore: auto-refresh Futbuteo league data [skip ci]"
-            git push origin main
-          fi
-
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Subir artefacto de Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './docs'
-
-      - name: Desplegar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          git diff --staged --quiet || (git commit -m "chore: auto-refresh Futbuteo league data" && git push)
