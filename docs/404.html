@@ -892,23 +892,42 @@
       font-size: 13px;
     }
 
-    .st-cmp-row .val-a {
-      text-align: right;
-      font-weight: 700;
-      color: var(--sc-blue);
-      font-variant-numeric: tabular-nums;
-    }
-
+    .st-cmp-row .val-a,
     .st-cmp-row .val-b {
-      text-align: left;
-      font-weight: 700;
-      color: var(--score-red);
       font-variant-numeric: tabular-nums;
+      transition: all 0.2s ease;
+      color: #94a3b8; /* Atenuado para el perdedor */
+      font-weight: 500;
+      font-size: 13px;
     }
 
-    .st-cmp-row .val-a.winner, .st-cmp-row .val-b.winner {
+    .st-cmp-row .val-a { text-align: right; }
+    .st-cmp-row .val-b { text-align: left; }
+
+    /* Ganador: color sólido del equipo, tamaño mayor y negrita rotunda */
+    .st-cmp-row .val-a.winner {
+      color: var(--sc-blue);
       font-weight: 900;
-      font-size: 1.05em;
+      font-size: 15px;
+    }
+
+    .st-cmp-row .val-b.winner {
+      color: var(--score-red);
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    /* Empate: ambos con color pero peso intermedio */
+    .st-cmp-row .val-a.tie {
+      color: var(--sc-blue);
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    .st-cmp-row .val-b.tie {
+      color: var(--score-red);
+      font-weight: 700;
+      font-size: 13.5px;
     }
 
     .st-bar-track {
@@ -927,14 +946,19 @@
       height: 100%;
       background: var(--sc-blue);
       border-radius: 6px;
-      transition: width 0.3s ease;
+      transition: width 0.3s ease, opacity 0.3s ease;
     }
 
     .st-bar-fill-b {
       height: 100%;
       background: var(--score-red);
       border-radius: 6px;
-      transition: width 0.3s ease;
+      transition: width 0.3s ease, opacity 0.3s ease;
+    }
+
+    .st-bar-fill-a.muted,
+    .st-bar-fill-b.muted {
+      opacity: 0.55;
     }
 
     .st-cmp-row .lbl-center {
@@ -1829,13 +1853,16 @@
       if (!A || !B) return '';
 
       function row5Col(valA, pctA, label, pctB, valB, isWinA, isWinB) {
-        const clsA = isWinA ? 'val-a winner' : 'val-a';
-        const clsB = isWinB ? 'val-b winner' : 'val-b';
+        const isTie = !isWinA && !isWinB;
+        const clsA = isWinA ? 'val-a winner' : (isTie ? 'val-a tie' : 'val-a');
+        const clsB = isWinB ? 'val-b winner' : (isTie ? 'val-b tie' : 'val-b');
+        const barClsA = isWinA ? 'st-bar-fill-a' : (isTie ? 'st-bar-fill-a' : 'st-bar-fill-a muted');
+        const barClsB = isWinB ? 'st-bar-fill-b' : (isTie ? 'st-bar-fill-b' : 'st-bar-fill-b muted');
         return '<div class="st-cmp-row">' +
           '<div class="' + clsA + '">' + valA + '</div>' +
-          '<div class="st-bar-track track-a"><div class="st-bar-fill-a" style="width:' + pctA + '%"></div></div>' +
+          '<div class="st-bar-track track-a"><div class="' + barClsA + '" style="width:' + pctA + '%"></div></div>' +
           '<div class="lbl-center" title="' + label + '">' + label + '</div>' +
-          '<div class="st-bar-track track-b"><div class="st-bar-fill-b" style="width:' + pctB + '%"></div></div>' +
+          '<div class="st-bar-track track-b"><div class="' + barClsB + '" style="width:' + pctB + '%"></div></div>' +
           '<div class="' + clsB + '">' + valB + '</div>' +
         '</div>';
       }
