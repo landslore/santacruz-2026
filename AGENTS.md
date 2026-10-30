@@ -51,12 +51,16 @@ En [`scripts/update-data.mjs`](file:///Users/israelvinualeslopez/sources/santacr
 /Users/israelvinualeslopez/sources/santacruz-2026/
 ├── AGENTS.md                  # Manual agéntico de mantenimiento
 ├── plan.md                    # Historial y seguimiento de fases
+├── Código.js                  # Backend Google Apps Script (scraper en vivo para 'Actualizar aquí y ahora')
+├── appsscript.json            # Configuración y permisos OAuth de Apps Script
+├── .claspignore               # Reglas de subida de clasp
 ├── scripts/
 │   └── update-data.mjs        # Scraper autónomo de Futbuteo -> docs/data.json
 ├── docs/                      # Carpeta publicada en GitHub Pages
-│   ├── index.html             # Frontend SPA responsive
+│   ├── index.html             # Frontend SPA responsive con fallback híbrido
 │   ├── 404.html               # Redirección SPA
-│   └── data.json              # Snapshot precalculado de la liga
+│   ├── data.json              # Snapshot precalculado de la liga
+│   └── .nojekyll              # Evita que Jekyll interfiera en GitHub Pages
 └── .github/
     └── workflows/
         └── pages.yml          # GitHub Action que actualiza datos cada 6 horas
@@ -64,7 +68,18 @@ En [`scripts/update-data.mjs`](file:///Users/israelvinualeslopez/sources/santacr
 
 ---
 
-## 4. Runbook de Despliegue para Agentes
+## 4. Arquitectura Híbrida de Refresco (A + B)
+
+1. **Capa 1 — Caché local (`localStorage` — 48 horas)**: En aperturas normales la web abre al instante (0 ms).
+2. **Capa 2 — Snapshot estático (`docs/data.json` en GitHub Pages)**: Refrescado automáticamente cada 6 horas por GitHub Actions.
+3. **Capa 3 — En vivo 'Aquí y Ahora' (`🔄 Actualizar`)**:
+   - Al pulsar `🔄 Actualizar`, el frontend invoca en vivo la API Web App de Google Apps Script (`Código.js`).
+   - Resuelve el challenge de Futbuteo en 1 segundo y devuelve la última información disponible con CORS abierto.
+   - Si la API tardase o estuviera inaccesible, realiza un fallback transparente automático a `./data.json?_t=Date.now()`.
+
+---
+
+## 5. Runbook de Despliegue para Agentes
 
 Cada vez que se modifiquen los scripts o la interfaz, seguir estos pasos:
 
@@ -73,10 +88,17 @@ Cada vez que se modifiquen los scripts o la interfaz, seguir estos pasos:
 node scripts/update-data.mjs
 ```
 
-### Paso 2: Publicar cambios en GitHub
+### Paso 2: Desplegar cambios en Google Apps Script
+```bash
+clasp push -f
+clasp deploy -i AKfycbwqCjRxCHtbt41eMDFuzIi23N7Z72LADEYZmx-pLLz5Q3y0XhL0tPSTCYyuMvvpTKua4g -d "Descripción de la versión"
+```
+
+### Paso 3: Publicar cambios en GitHub
 ```bash
 git add .
 git commit --no-gpg-sign -m "feat: descripción de los cambios"
 git push origin main
 ```
 GitHub Pages publica automáticamente `/docs` en `https://landslore.github.io/santacruz-2026/`.
+

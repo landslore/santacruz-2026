@@ -1027,6 +1027,7 @@
     const LOCAL_CACHE_KEY = 'SANTACRUZ_2026_LOCAL_CACHE_V1';
     const LOCAL_CACHE_TTL_MS = 48 * 60 * 60 * 1000; // 48 horas
     const FEATURED_TEAM_ID = 19230216;
+    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwqCjRxCHtbt41eMDFuzIi23N7Z72LADEYZmx-pLLz5Q3y0XhL0tPSTCYyuMvvpTKua4g/exec';
 
     const urlParams = new URLSearchParams(window.location.search || '');
     const INITIAL_VIEW = urlParams.get('page') || 'resultados';
@@ -1132,28 +1133,49 @@
         document.getElementById('loadingContainer').classList.remove('hidden');
       }
 
-      const cacheBust = forceRefresh ? ('?_t=' + Date.now()) : '';
-      fetch('./data.json' + cacheBust)
-        .then(r => r.json())
-        .then(data => {
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = '🔄 Actualizar';
-          }
-          if (data && data.ok) {
-            saveToLocalCache(data);
-            initializeWithData(data, !STATE.data);
-          } else {
-            showError('No se pudieron procesar los datos de la liga.');
-          }
-        })
-        .catch(err => {
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = '🔄 Actualizar';
-          }
-          showError('Error al conectar: ' + err.message);
-        });
+      function finishBtn() {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🔄 Actualizar';
+        }
+      }
+
+      function fallbackToStatic() {
+        const cacheBust = forceRefresh ? ('?_t=' + Date.now()) : '';
+        fetch('./data.json' + cacheBust)
+          .then(r => r.json())
+          .then(data => {
+            finishBtn();
+            if (data && data.ok) {
+              saveToLocalCache(data);
+              initializeWithData(data, !STATE.data);
+            } else {
+              showError('No se pudieron procesar los datos de la liga.');
+            }
+          })
+          .catch(err => {
+            finishBtn();
+            showError('Error al conectar: ' + err.message);
+          });
+      }
+
+      if (forceRefresh && GAS_API_URL) {
+        // Opción B: Scraping en vivo contra Futbuteo en tiempo real
+        fetch(GAS_API_URL + '?format=json&refresh=1&_t=' + Date.now())
+          .then(r => r.json())
+          .then(data => {
+            finishBtn();
+            if (data && data.ok) {
+              saveToLocalCache(data);
+              initializeWithData(data, false);
+            } else {
+              fallbackToStatic();
+            }
+          })
+          .catch(fallbackToStatic);
+      } else {
+        fallbackToStatic();
+      }
     }
 
     function refreshLiveData() {
@@ -1650,3 +1672,4 @@
   </script>
 </body>
 </html>
+
