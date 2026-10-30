@@ -279,33 +279,41 @@
       color: #475569;
     }
 
-    /* Tarjetas de Partido (.game) */
+    /* Tarjetas de Partido (.game) - Idénticas a Somos Valle en desktop */
     .game {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
-      padding: 12px 10px;
-      margin-bottom: 12px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+      padding: 14px 12px;
+      margin-bottom: 14px;
+      gap: 8px;
       color: #334155;
       position: relative;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 
     .game.santacruz-game {
       background-color: #fffdf5;
       border: 2px solid var(--sc-gold);
-      box-shadow: 0 3px 8px rgba(251, 133, 0, 0.2);
+      box-shadow: 0 4px 10px rgba(251, 133, 0, 0.2);
     }
 
     .game-header-strip {
+      flex-basis: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 11.5px;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       padding-bottom: 4px;
       border-bottom: 1px solid #f1f5f9;
+      order: 0;
     }
 
     .badge-jornada {
@@ -330,21 +338,13 @@
     .badge-loss { background-color: #c62828; color: white; }
     .badge-pending { background-color: #e2e8f0; color: #475569; }
 
-    /* Desktop layout for match card */
-    .game-body-desktop {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
     .game .localLogo,
     .game .visitorLogo {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       background-color: #ffffff;
       border: 1px solid #e2e8f0;
@@ -355,21 +355,66 @@
     .game .localLogo img,
     .game .visitorLogo img,
     .img-circle {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
     }
 
-    .game .localName,
-    .game .visitorName {
+    .game .localLogo { order: 1; }
+
+    .game .localName {
+      order: 2;
+      flex: 1 1 25%;
+      text-align: right;
       font-weight: bold;
       color: var(--sc-blue);
-      font-size: 13.5px;
+      font-size: 1.05em;
+      padding: 4px 6px;
+      min-width: 100px;
       cursor: pointer;
-      line-height: 1.25;
-      min-width: 0;
-      word-break: break-word;
+      border-radius: 4px;
+      transition: background-color 0.15s ease;
     }
+
+    .score-box {
+      order: 3;
+      min-width: 86px;
+      padding: 4px 12px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 900;
+      color: var(--score-red);
+      font-size: 1.8em;
+      line-height: 1;
+    }
+
+    .score-box.pending {
+      font-size: 1em;
+      color: #64748b;
+      font-weight: bold;
+      padding: 6px 12px;
+    }
+
+    .game .visitorName {
+      order: 4;
+      flex: 1 1 25%;
+      text-align: left;
+      font-weight: bold;
+      color: var(--sc-blue);
+      font-size: 1.05em;
+      padding: 4px 6px;
+      min-width: 100px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.15s ease;
+    }
+
+    .game .visitorLogo { order: 5; }
 
     .game .localName:hover,
     .game .visitorName:hover {
@@ -379,46 +424,27 @@
     .game .santacruz-team-text {
       background: var(--sc-yellow);
       color: #07192f;
-      padding: 3px 6px;
+      padding: 4px 8px;
       border-radius: 4px;
-      display: inline-block;
-    }
-
-    .score-box {
-      min-width: 68px;
-      padding: 6px 10px;
-      background: #f1f5f9;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      font-weight: 900;
-      color: var(--score-red);
-      font-size: 1.6em;
-      line-height: 1;
-    }
-
-    .score-box.pending {
-      font-size: 1.1em;
-      color: #64748b;
-      font-weight: bold;
     }
 
     .game .date-meta {
+      flex-basis: 100%;
+      order: 6;
       text-align: center;
       color: var(--text-muted);
-      font-size: 11.5px;
+      font-size: 12px;
       margin-top: 6px;
       border-top: 1px dashed #e2e8f0;
-      padding-top: 6px;
+      padding-top: 8px;
     }
 
     .game .address-meta {
+      flex-basis: 100%;
+      order: 7;
       text-align: center;
       margin-top: 2px;
-      font-size: 11.5px;
+      font-size: 12px;
     }
 
     .game .address-meta a {
@@ -1317,13 +1343,13 @@
         '<div class="localName' + localHighlight + '" onclick="goToTeamById(' + m.equipoLocalId + ')">' +
           escapeHtml(m.equipoLocal) + (m.esLocalSantaCruz ? ' ⭐' : '') +
         '</div>' +
-        '<div class="visitorLogo">' +
-          '<img src="' + escapeAttr(m.equipoVisitanteEscudo) + '" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
-        '</div>' +
+        scoreHtml +
         '<div class="visitorName' + visitHighlight + '" onclick="goToTeamById(' + m.equipoVisitanteId + ')">' +
           escapeHtml(m.equipoVisitante) + (m.esVisitanteSantaCruz ? ' ⭐' : '') +
         '</div>' +
-        scoreHtml +
+        '<div class="visitorLogo">' +
+          '<img src="' + escapeAttr(m.equipoVisitanteEscudo) + '" alt="" onerror="this.onerror=null;this.src=\'https://www.futbuteo.com/escudos/80/default.webp\';" />' +
+        '</div>' +
         (m.fecha || m.hora ? '<div class="date-meta">📅 ' + escapeHtml(m.fecha) + (m.hora ? ' ' + escapeHtml(m.hora) : '') + '</div>' : '') +
         (m.campo ? '<div class="address-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(m.campo + ' A Coruña') + '" target="_blank" rel="noopener">' + escapeHtml(m.campo) + '</a></div>' : '') +
       '</div>';
@@ -1484,14 +1510,34 @@
       html += '<h2 class="st-zona">Rankings del Grupo A Coruña · G1</h2><div class="st-rk-g">';
 
       const rankings = [
-        { t: '🔥 Mejor ataque', s: 'goles a favor', v: x => x.gf, sub: x => x.gf + ' GF en ' + x.pj + ' PJ' },
-        { t: '🛡️ Mejor defensa', s: 'menos goles en contra', v: x => -x.gc, sub: x => x.gc + ' GC en ' + x.pj + ' PJ', desc: true },
-        { t: '🏠 Mejor en casa', s: 'puntos de local', v: x => x.homePts, sub: x => x.homePts + ' pts (' + x.homePj + ' PJ)' },
-        { t: '✈️ Mejor fuera', s: 'puntos de visitante', v: x => x.awayPts, sub: x => x.awayPts + ' pts (' + x.awayPj + ' PJ)' }
+        {
+          t: '🔥 Mejor ataque',
+          s: 'más goles a favor',
+          sub: x => x.gf + ' GF en ' + x.pj + ' PJ',
+          sort: (a, b) => (b.gf - a.gf) || (b.diff - a.diff) || (b.pts - a.pts)
+        },
+        {
+          t: '🛡️ Mejor defensa',
+          s: 'menos goles encajados',
+          sub: x => x.gc + ' GC en ' + x.pj + ' PJ',
+          sort: (a, b) => (a.gc - b.gc) || (b.diff - a.diff) || (b.pts - a.pts)
+        },
+        {
+          t: '🏠 Mejor en casa',
+          s: 'puntos de local',
+          sub: x => x.homePts + ' pts (' + x.homePj + ' PJ)',
+          sort: (a, b) => (b.homePts - a.homePts) || (b.pts - a.pts)
+        },
+        {
+          t: '✈️ Mejor fuera',
+          s: 'puntos de visitante',
+          sub: x => x.awayPts + ' pts (' + x.awayPj + ' PJ)',
+          sort: (a, b) => (b.awayPts - a.awayPts) || (b.pts - a.pts)
+        }
       ];
 
       rankings.forEach(rk => {
-        const sorted = S.teamList.slice().sort((a, b) => rk.desc ? rk.v(a) - rk.v(b) : rk.v(b) - rk.v(a));
+        const sorted = S.teamList.slice().sort(rk.sort);
         html += '<div class="st-card"><div class="st-card-h"><b>' + rk.t + '</b><small>' + rk.s + '</small></div>';
         sorted.slice(0, 5).forEach((t, i) => {
           const scClass = t.esSantaCruz ? ' santacruz' : '';
