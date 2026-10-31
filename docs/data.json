@@ -4,8 +4,8 @@
   "competicion": "Prebenjamín - Primera Futgal",
   "grupo": "A Coruña · G1 (14 Equipos)",
   "temporada": "2026-2027",
-  "updatedAt": "31/10/2026 16:45:45",
-  "fetchedAtMs": 1793465145664,
+  "updatedAt": "31/10/2026 18:12:23",
+  "fetchedAtMs": 1793466743829,
   "jornadaActual": 4,
   "featuredTeamId": 19230216,
   "featuredTeamName": "Santa Cruz C.F.",
@@ -836,9 +836,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-19230216.webp",
           "esVisitanteSantaCruz": true,
           "resultado": "1-2",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 1,
+          "golesVisitante": 2,
+          "jugado": true
         },
         {
           "id": 2156390,
@@ -1860,9 +1860,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-3509455.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "0-1",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 0,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156391,
@@ -2884,9 +2884,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "3-0",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 3,
+          "golesVisitante": 0,
+          "jugado": true
         },
         {
           "id": 2156395,
@@ -3396,9 +3396,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "3-0",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 3,
+          "golesVisitante": 0,
+          "jugado": true
         },
         {
           "id": 2156396,
@@ -3908,9 +3908,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-3509455.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "0-1",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 0,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156392,
@@ -5956,9 +5956,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-19230216.webp",
           "esVisitanteSantaCruz": true,
           "resultado": "1-2",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 1,
+          "golesVisitante": 2,
+          "jugado": true
         },
         {
           "id": 2156396,
@@ -8006,9 +8006,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-19230216.webp",
           "esVisitanteSantaCruz": true,
           "resultado": "1-2",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 1,
+          "golesVisitante": 2,
+          "jugado": true
         },
         {
           "id": 2156390,
@@ -9030,9 +9030,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-3509455.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "0-1",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 0,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156391,
@@ -10054,9 +10054,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "3-0",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 3,
+          "golesVisitante": 0,
+          "jugado": true
         },
         {
           "id": 2156395,
@@ -10566,9 +10566,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "3-0",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 3,
+          "golesVisitante": 0,
+          "jugado": true
         },
         {
           "id": 2156396,
@@ -11078,9 +11078,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-3509455.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "0-1",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 0,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156392,
@@ -13126,9 +13126,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-19230216.webp",
           "esVisitanteSantaCruz": true,
           "resultado": "1-2",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 1,
+          "golesVisitante": 2,
+          "jugado": true
         },
         {
           "id": 2156396,
@@ -15016,9 +15016,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-3509455.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "0-1",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 0,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2146843,
@@ -15035,9 +15035,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-19230216.webp",
           "esVisitanteSantaCruz": true,
           "resultado": "1-2",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 1,
+          "golesVisitante": 2,
+          "jugado": true
         },
         {
           "id": 2146849,
@@ -15054,9 +15054,9 @@
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
           "esVisitanteSantaCruz": false,
           "resultado": "3-0",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "golesLocal": 3,
+          "golesVisitante": 0,
+          "jugado": true
         },
         {
           "id": 2146844,

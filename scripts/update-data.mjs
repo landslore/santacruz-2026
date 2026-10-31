@@ -190,7 +190,8 @@ function parseFutbuteoData(html) {
     let fechaJornada = '';
 
     const partidosNormalizados = batch.map(m => {
-      const jugado = Boolean(m.pasado && m.r && m.r.includes('-'));
+      const tieneMarcador = Boolean(m.r && /^\d+\s*-\s*\d+$/.test(String(m.r).trim()));
+      const jugado = tieneMarcador || Boolean(m.pasado && m.r && m.r.includes('-'));
       if (!jugado) jornadaDisputada = false;
 
       let golesLocal = null;

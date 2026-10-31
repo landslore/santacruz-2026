@@ -1924,7 +1924,7 @@
   </div>
 
   <script>
-    const LOCAL_CACHE_KEY = 'SANTACRUZ_2026_LOCAL_CACHE_V1';
+    const LOCAL_CACHE_KEY = 'SANTACRUZ_2026_LOCAL_CACHE_V2';
     const LOCAL_CACHE_TTL_MS = 48 * 60 * 60 * 1000; // 48 horas
     const FEATURED_TEAM_ID = 19230216;
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwqCjRxCHtbt41eMDFuzIi23N7Z72LADEYZmx-pLLz5Q3y0XhL0tPSTCYyuMvvpTKua4g/exec';
@@ -2021,6 +2021,16 @@
         const cached = loadFromLocalCache();
         if (cached && cached.ok) {
           initializeWithData(cached, true);
+          // Revalidación silenciosa en segundo plano
+          fetch('./data.json?_t=' + Date.now())
+            .then(function(r) { return r.json(); })
+            .then(function(fresh) {
+              if (fresh && fresh.ok && Number(fresh.fetchedAtMs || 0) > Number(cached.fetchedAtMs || 0)) {
+                saveToLocalCache(fresh);
+                initializeWithData(fresh, false);
+              }
+            })
+            .catch(function() {});
           return;
         }
       }
