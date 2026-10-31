@@ -3035,10 +3035,10 @@
         const sum = routes.reduce((acc, r) => acc + r.diff, 0);
         const avg = sum / count;
         const sumStr = (sum > 0 ? '+' : '') + sum;
-        const tipStr = 'Promedio de las ' + count + ' rutas: ' + sumStr + ' goles / ' + count + ' = ' + (avg > 0 ? '+' : '') + avg.toFixed(1);
-        if (Math.abs(avg) < 0.05) avgDiffText = '<span style="color:#64748b" title="' + tipStr + '">Media nivel (' + count + ' rutas): 0.0 goles</span>';
-        else if (avg > 0) avgDiffText = '<span style="color:var(--sc-blue)" title="' + tipStr + '">Media nivel (' + count + ' rutas): +' + avg.toFixed(1) + ' para ' + escapeHtml(teamA.equipo.split(' ')[0]) + '</span>';
-        else avgDiffText = '<span style="color:var(--score-red)" title="' + tipStr + '">Media nivel (' + count + ' rutas): +' + Math.abs(avg).toFixed(1) + ' para ' + escapeHtml(teamB.equipo.split(' ')[0]) + '</span>';
+        const tipStr = 'Suma de goles de las ' + count + ' cadenas: ' + sumStr + ' goles. Promedio: ' + sumStr + ' / ' + count + ' = ' + (avg > 0 ? '+' : '') + avg.toFixed(1) + ' goles/ruta';
+        if (Math.abs(avg) < 0.05) avgDiffText = '<span style="color:#64748b" title="' + tipStr + '">Promedio nivel: 0.0 goles (' + count + ' rutas)</span>';
+        else if (avg > 0) avgDiffText = '<span style="color:var(--sc-blue)" title="' + tipStr + '">Promedio nivel: +' + avg.toFixed(1) + ' para ' + escapeHtml(teamA.equipo.split(' ')[0]) + ' (' + sumStr + ' goles en ' + count + ' rutas)</span>';
+        else avgDiffText = '<span style="color:var(--score-red)" title="' + tipStr + '">Promedio nivel: +' + Math.abs(avg).toFixed(1) + ' para ' + escapeHtml(teamB.equipo.split(' ')[0]) + ' (' + sumStr + ' goles en ' + count + ' rutas)</span>';
       }
 
       const isOpen = !!STATE.comparativaAccordions[lvl];
