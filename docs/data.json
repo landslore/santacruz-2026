@@ -4,9 +4,9 @@
   "competicion": "Prebenjamín - Primera Futgal",
   "grupo": "A Coruña · G1 (14 Equipos)",
   "temporada": "2026-2027",
-  "updatedAt": "01/11/2026 12:37:34",
-  "fetchedAtMs": 1793536654872,
-  "jornadaActual": 4,
+  "updatedAt": "01/11/2026 21:38:56",
+  "fetchedAtMs": 1793569136332,
+  "jornadaActual": 5,
   "featuredTeamId": 19230216,
   "featuredTeamName": "Santa Cruz C.F.",
   "clasificacion": [
@@ -124,6 +124,22 @@
     },
     {
       "posicion": 8,
+      "equipoId": 1740,
+      "equipo": "U.D. Carral",
+      "escudo": "https://www.futbuteo.com/escudos/80/gal-1740.webp",
+      "esSantaCruz": false,
+      "puntos": 5,
+      "pj": 4,
+      "pg": 1,
+      "pe": 2,
+      "pp": 1,
+      "gf": 5,
+      "gc": 5,
+      "diff": 0,
+      "forma": "EPEG"
+    },
+    {
+      "posicion": 9,
       "equipoId": 540,
       "equipo": "Olimpico C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-540.webp",
@@ -139,7 +155,7 @@
       "forma": "GPEP"
     },
     {
-      "posicion": 9,
+      "posicion": 10,
       "equipoId": 362657,
       "equipo": "Sada C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
@@ -155,7 +171,7 @@
       "forma": "PGPP"
     },
     {
-      "posicion": 10,
+      "posicion": 11,
       "equipoId": 18513167,
       "equipo": "Victoria C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-18513167.webp",
@@ -169,22 +185,6 @@
       "gc": 10,
       "diff": -8,
       "forma": "PGPP"
-    },
-    {
-      "posicion": 11,
-      "equipoId": 1740,
-      "equipo": "U.D. Carral",
-      "escudo": "https://www.futbuteo.com/escudos/80/gal-1740.webp",
-      "esSantaCruz": false,
-      "puntos": 2,
-      "pj": 3,
-      "pg": 0,
-      "pe": 2,
-      "pp": 1,
-      "gf": 2,
-      "gc": 4,
-      "diff": -2,
-      "forma": "EPE"
     },
     {
       "posicion": 12,
@@ -225,14 +225,14 @@
       "escudo": "https://www.futbuteo.com/escudos/80/gal-17814191.webp",
       "esSantaCruz": false,
       "puntos": 0,
-      "pj": 3,
+      "pj": 4,
       "pg": 0,
       "pe": 0,
-      "pp": 3,
-      "gf": 2,
-      "gc": 8,
-      "diff": -6,
-      "forma": "PPP"
+      "pp": 4,
+      "gf": 3,
+      "gc": 11,
+      "diff": -8,
+      "forma": "PPPP"
     }
   ],
   "equipos": [
@@ -753,7 +753,7 @@
       "nombre": "Olimpico C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-540.webp",
       "esSantaCruz": false,
-      "posicion": 8,
+      "posicion": 9,
       "puntos": 4,
       "pj": 4,
       "pg": 1,
@@ -1265,16 +1265,16 @@
       "nombre": "U.D. Carral",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-1740.webp",
       "esSantaCruz": false,
-      "posicion": 11,
-      "puntos": 2,
-      "pj": 3,
-      "pg": 0,
+      "posicion": 8,
+      "puntos": 5,
+      "pj": 4,
+      "pg": 1,
       "pe": 2,
       "pp": 1,
-      "gf": 2,
-      "gc": 4,
-      "diff": -2,
-      "forma": "EPE",
+      "gf": 5,
+      "gc": 5,
+      "diff": 0,
+      "forma": "EPEG",
       "partidos": [
         {
           "id": 2146827,
@@ -1347,10 +1347,10 @@
           "equipoVisitante": "Sporting Cambre",
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-17814191.webp",
           "esVisitanteSantaCruz": false,
-          "resultado": "",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "resultado": "3-1",
+          "golesLocal": 3,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156393,
@@ -3313,7 +3313,7 @@
       "nombre": "Sada C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
       "esSantaCruz": false,
-      "posicion": 9,
+      "posicion": 10,
       "puntos": 3,
       "pj": 4,
       "pg": 1,
@@ -4851,14 +4851,14 @@
       "esSantaCruz": false,
       "posicion": 14,
       "puntos": 0,
-      "pj": 3,
+      "pj": 4,
       "pg": 0,
       "pe": 0,
-      "pp": 3,
-      "gf": 2,
-      "gc": 8,
-      "diff": -6,
-      "forma": "PPP",
+      "pp": 4,
+      "gf": 3,
+      "gc": 11,
+      "diff": -8,
+      "forma": "PPPP",
       "partidos": [
         {
           "id": 2146828,
@@ -4931,10 +4931,10 @@
           "equipoVisitante": "Sporting Cambre",
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-17814191.webp",
           "esVisitanteSantaCruz": false,
-          "resultado": "",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "resultado": "3-1",
+          "golesLocal": 3,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156394,
@@ -5361,7 +5361,7 @@
       "nombre": "Victoria C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-18513167.webp",
       "esSantaCruz": false,
-      "posicion": 10,
+      "posicion": 11,
       "puntos": 3,
       "pj": 4,
       "pg": 1,
@@ -7923,7 +7923,7 @@
       "nombre": "Olimpico C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-540.webp",
       "esSantaCruz": false,
-      "posicion": 8,
+      "posicion": 9,
       "puntos": 4,
       "pj": 4,
       "pg": 1,
@@ -8435,16 +8435,16 @@
       "nombre": "U.D. Carral",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-1740.webp",
       "esSantaCruz": false,
-      "posicion": 11,
-      "puntos": 2,
-      "pj": 3,
-      "pg": 0,
+      "posicion": 8,
+      "puntos": 5,
+      "pj": 4,
+      "pg": 1,
       "pe": 2,
       "pp": 1,
-      "gf": 2,
-      "gc": 4,
-      "diff": -2,
-      "forma": "EPE",
+      "gf": 5,
+      "gc": 5,
+      "diff": 0,
+      "forma": "EPEG",
       "partidos": [
         {
           "id": 2146827,
@@ -8517,10 +8517,10 @@
           "equipoVisitante": "Sporting Cambre",
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-17814191.webp",
           "esVisitanteSantaCruz": false,
-          "resultado": "",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "resultado": "3-1",
+          "golesLocal": 3,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156393,
@@ -10483,7 +10483,7 @@
       "nombre": "Sada C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-362657.webp",
       "esSantaCruz": false,
-      "posicion": 9,
+      "posicion": 10,
       "puntos": 3,
       "pj": 4,
       "pg": 1,
@@ -12021,14 +12021,14 @@
       "esSantaCruz": false,
       "posicion": 14,
       "puntos": 0,
-      "pj": 3,
+      "pj": 4,
       "pg": 0,
       "pe": 0,
-      "pp": 3,
-      "gf": 2,
-      "gc": 8,
-      "diff": -6,
-      "forma": "PPP",
+      "pp": 4,
+      "gf": 3,
+      "gc": 11,
+      "diff": -8,
+      "forma": "PPPP",
       "partidos": [
         {
           "id": 2146828,
@@ -12101,10 +12101,10 @@
           "equipoVisitante": "Sporting Cambre",
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-17814191.webp",
           "esVisitanteSantaCruz": false,
-          "resultado": "",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "resultado": "3-1",
+          "golesLocal": 3,
+          "golesVisitante": 1,
+          "jugado": true
         },
         {
           "id": 2156394,
@@ -12531,7 +12531,7 @@
       "nombre": "Victoria C.F.",
       "escudo": "https://www.futbuteo.com/escudos/80/gal-18513167.webp",
       "esSantaCruz": false,
-      "posicion": 10,
+      "posicion": 11,
       "puntos": 3,
       "pj": 4,
       "pg": 1,
@@ -14999,7 +14999,7 @@
     {
       "numero": 4,
       "fecha": "sáb 31 oct",
-      "disputada": false,
+      "disputada": true,
       "partidos": [
         {
           "id": 2146845,
@@ -15129,10 +15129,10 @@
           "equipoVisitante": "Sporting Cambre",
           "equipoVisitanteEscudo": "https://www.futbuteo.com/escudos/80/gal-17814191.webp",
           "esVisitanteSantaCruz": false,
-          "resultado": "",
-          "golesLocal": null,
-          "golesVisitante": null,
-          "jugado": false
+          "resultado": "3-1",
+          "golesLocal": 3,
+          "golesVisitante": 1,
+          "jugado": true
         }
       ]
     },
